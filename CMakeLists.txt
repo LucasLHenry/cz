@@ -56,14 +56,17 @@ pico_set_program_version(cz "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
 pico_enable_stdio_uart(cz 0)
-pico_enable_stdio_usb(cz 0)
+pico_enable_stdio_usb(cz 1)
 
 # Add the standard library to the build
 target_link_libraries(cz
         pico_stdlib
+        pico_multicore
         hardware_dma
         hardware_clocks
         hardware_pio
+        hardware_interp
+        hardware_adc
         )
 
 # Add the standard include files to the build

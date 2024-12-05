@@ -3,6 +3,9 @@
 
 #define I2S_DATA_PIN 9
 #define I2S_BASE_CLK_PIN 10
+
 #define DAC_PIO_SM 0
+
+#define CLK_FREQ_Hz 150000
 
 #endif // DRIVERS_PINS_H_
