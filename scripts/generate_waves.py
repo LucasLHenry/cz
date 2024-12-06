@@ -1,9 +1,10 @@
 from enum import Enum, auto
-import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-TABLE_LEN = 1024
+TABLE_NUM_BITS = 12
+TABLE_LEN = 2 ** TABLE_NUM_BITS
+SAMPLE_FREQ = 48000
 PATH_TO_TABLES = "/tables/"
 FILE_NAME = "waves.h"
 
@@ -35,13 +36,17 @@ def main():
     saw = generate_saw()
     sine = generate_sine()
     tri = generate_tri()
-    # x = np.linspace(0, 1, TABLE_LEN)
-    # plt.plot(x, tri)
-    # plt.show()
+
+    downshift = 32 - TABLE_NUM_BITS
+    hz_phasor = int(2**32 / SAMPLE_FREQ)
+    
     file_path = f"{os.getcwd()}{PATH_TO_TABLES}{FILE_NAME}"
     output_type = OutputType.INT32
     with open(file_path, 'w') as f:
         f.write(file_header)
+        f.write(f"const uint32_t k_wave_table_len = {TABLE_LEN};\n")
+        f.write(f"const uint32_t k_dds_downshift = {downshift};\n")
+        f.write(f"const uint32_t k_hz_phasor = {hz_phasor};\n")
         write_table(f, "sine_table", sine, output_type)
         write_table(f, "saw_table", saw, output_type)
         write_table(f, "tri_table", tri, output_type)
@@ -60,6 +65,7 @@ def write_table(f, table_name: str, table: list[float], datatype: OutputType):
                 val = (table[i] + 1) / 2
             case OutputType.INT32:
                 val = int(table[i] * 2**31)
+                if val == 2**31: val -= 1
             case OutputType.UINT32:
                 val = int((table[i] + 1) * 2**31)
         arr_write_item(f, i, val, 32, TABLE_LEN)

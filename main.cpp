@@ -10,27 +10,23 @@
 #include "hardware/adc.h"
  
 #include "drivers/audio_dac.hpp"
+#include "dsp/variable_wave_oscillator.hpp"
  
 const uint SAMPLE_RATE = 48000;
 
 AudioDAC audio_dac;
 AudioDAC* DAC_REF_ = &audio_dac;
+
+VariWaveOsc osc;
  
 #define BUFFER_SIZE 8
 
 
 uint32_t idx = 0;
 uint16_t increment = 1;
-
-static int16_t sine_wave_table[2048];
  
 void buffer_fill(AudioDAC::Frame* buf, size_t size) {
-    for (uint i = 0; i < BUFFER_SIZE; i++) {
-        buf[i].l = sine_wave_table[idx];
-        buf[i].r = sine_wave_table[idx];
-        idx += increment;
-        idx %= 2048;
-    }
+    osc.process(buf, size, increment * 30);
 }
 
 void core1_entry_point() {
@@ -39,6 +35,10 @@ void core1_entry_point() {
     while (true) {}
 }
  
+uint32_t wave_pot;
+uint32_t warp_pot;
+uint32_t freq_pot;
+
 int main() {
     set_sys_clock_khz(CLK_FREQ_Hz, true);
     sleep_ms(100);
@@ -49,9 +49,7 @@ int main() {
     adc_gpio_init(27);
     adc_gpio_init(28);
 
-    for (int i = 0; i < 2048; i++) {
-        sine_wave_table[i] = 32767 * cosf(i * 4 * (float) (M_PI / 2048));
-    }
+    osc.init(&wave_pot);
 
     multicore_launch_core1(core1_entry_point);
 
@@ -61,10 +59,9 @@ int main() {
         uint32_t val = adc_read();
         adc_select_input(1);
         val += adc_read();
-        adc_select_input(2);
-        val += adc_read();
         increment = (val >> 10) + 1;
-        printf("Hello World\n");
+        adc_select_input(2);
+        wave_pot = adc_read();
     }
     return 0;
 }
