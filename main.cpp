@@ -10,34 +10,29 @@
 #include "hardware/adc.h"
  
 #include "drivers/audio_dac.hpp"
+#include "drivers/interpolator.hpp"
+#include "drivers/potentiometer.hpp"
 #include "dsp/variable_wave_oscillator.hpp"
- 
-const uint SAMPLE_RATE = 48000;
+#include "hw_config.h"
 
 AudioDAC audio_dac;
 AudioDAC* DAC_REF_ = &audio_dac;
 
 VariWaveOsc osc;
- 
-#define BUFFER_SIZE 8
 
+Potentiometer wave_pot, freq_pot, warp_pot;
 
-uint32_t idx = 0;
-uint16_t increment = 1;
+float freq;
  
 void buffer_fill(AudioDAC::Frame* buf, size_t size) {
-    osc.process(buf, size, increment * 30);
+    osc.process(buf, size, freq);
 }
 
 void core1_entry_point() {
-    audio_dac.init(SAMPLE_RATE, BUFFER_SIZE);
+    audio_dac.init(OUTPUT_SAMPLE_RATE, DAC_BUFFER_SIZE);
     audio_dac.start(buffer_fill);
     while (true) {}
 }
- 
-uint32_t wave_pot;
-uint32_t warp_pot;
-uint32_t freq_pot;
 
 int main() {
     set_sys_clock_khz(CLK_FREQ_Hz, true);
@@ -45,23 +40,22 @@ int main() {
  
     stdio_init_all();
     adc_init();
-    adc_gpio_init(26);
-    adc_gpio_init(27);
-    adc_gpio_init(28);
+    wave_pot.init(ADC_OVERSAMPLE_AMT, 0);
+    warp_pot.init(ADC_OVERSAMPLE_AMT, 1);
+    freq_pot.init(ADC_OVERSAMPLE_AMT, 2);
 
-    osc.init(&wave_pot);
+    interpolator_init();
+
+    osc.init(&wave_pot.value);
 
     multicore_launch_core1(core1_entry_point);
 
     // Main loop
     while (true) {
-        adc_select_input(0);
-        uint32_t val = adc_read();
-        adc_select_input(1);
-        val += adc_read();
-        increment = (val >> 10) + 1;
-        adc_select_input(2);
-        wave_pot = adc_read();
+        warp_pot.read();
+        wave_pot.read();
+        freq = 30 + 100*(freq_pot.read() / 4096.0);
+
     }
     return 0;
 }

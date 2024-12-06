@@ -52,6 +52,8 @@ pico_sdk_init()
 add_executable(cz 
                 main.cpp 
                 drivers/audio_dac.cpp
+                drivers/interpolator.cpp
+                drivers/potentiometer.cpp
                 dsp/variable_wave_oscillator.cpp
             )
 
