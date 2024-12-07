@@ -50,12 +50,14 @@ pico_sdk_init()
 # Add executable. Default name is the project name, version 0.1
 add_executable(cz 
                 main.cpp 
+                utils.cpp
                 drivers/audio_dac.cpp
                 drivers/interpolator.cpp
                 drivers/potentiometer.cpp
                 dsp/variable_wave_oscillator.cpp
                 dsp/prng.cpp
                 dsp/dds_core.cpp
+                dsp/phase_distorter.cpp
               )
 
 pico_set_program_name(cz "cz")

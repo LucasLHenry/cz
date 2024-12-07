@@ -46,7 +46,7 @@ int main() {
 
     interpolator_init();
 
-    osc.init(&wave_pot.value);
+    osc.init(&wave_pot.value, &warp_pot.value);
 
     multicore_launch_core1(core1_entry_point);
 

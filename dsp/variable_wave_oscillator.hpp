@@ -4,21 +4,22 @@
 #include "../drivers/audio_dac.hpp"
 #include "../tables/waves.h"
 #include "../hw_config.h"
+#include "../utils.h"
 #include "prng.hpp"
 #include "dds_core.hpp"
-
-#define ONE_POLE(out, in, coefficient) out += (in - out) * coefficient
+#include "phase_distorter.hpp"
 
 class VariWaveOsc {
     public:
         VariWaveOsc() {}
         ~VariWaveOsc() {}
 
-        void init(uint16_t* wave_pos);
+        void init(uint16_t* wave_pos, uint16_t* warp_amt);
         void process(AudioDAC::Frame* buf, size_t size, float freq_hz);
     
     private:
         DDSCore dds;
+        PhaseDistorter pd;
         uint16_t* wave_pos_;
         uint32_t xfade_margin_;
         float volume_;
