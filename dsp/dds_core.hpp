@@ -10,10 +10,12 @@ class DDSCore {
         DDSCore() {}
         ~DDSCore() {}
 
+        void init(bool dither);
         uint32_t update();
         void set_freq(float freq_hz);
     
     private:
+        bool dither_;
         uint32_t acc_, pha_;
 };
 

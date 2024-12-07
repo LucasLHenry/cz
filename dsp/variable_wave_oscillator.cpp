@@ -7,6 +7,7 @@ void VariWaveOsc::init(uint16_t* wave_pos, uint16_t* warp_amt) {
     float ctf_freq_hz = 24000;
     aaf_coefficient_ = (ctf_freq_hz / OUTPUT_SAMPLE_RATE) / (1 + (ctf_freq_hz / OUTPUT_SAMPLE_RATE));
     pd.init(warp_amt);
+    dds.init(true);
 }
 
 void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq) {
@@ -29,6 +30,7 @@ void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq) {
         }
         int16_t wave_val = xfade(val1, val2, blend) * volume_;
         ONE_POLE(value_, wave_val, aaf_coefficient_);
+        // value_ += PRNG::centered_lcg() >> 29;
         buf[idx].l = static_cast<int16_t>(value_);
         buf[idx].r = static_cast<int16_t>(value_);
     }

@@ -4,6 +4,7 @@
 #include "../tables/warps.h"
 #include "../tables/waves.h"
 #include "../utils.h"
+#include "prng.hpp"
 
 class PhaseDistorter {
     public:
