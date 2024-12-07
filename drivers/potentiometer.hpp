@@ -2,6 +2,7 @@
 #define DRIVERS_POTENTIOMETER_H_
 
 #include "hardware/adc.h"
+#include "../utils.h"
 
 const size_t k_max_adc_oversample = 32;
 

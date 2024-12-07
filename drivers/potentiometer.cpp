@@ -12,6 +12,6 @@ uint16_t Potentiometer::read() {
     for (uint i = 0; i < oversample_; i++) {
         output += adc_read();
     }
-    value = static_cast<uint16_t>(output / oversample_);
+    ONE_POLE(value, static_cast<uint16_t>(output / oversample_), 0.1);
     return value;
 }
