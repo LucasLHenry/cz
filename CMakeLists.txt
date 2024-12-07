@@ -55,6 +55,7 @@ add_executable(cz
                 drivers/interpolator.cpp
                 drivers/potentiometer.cpp
                 dsp/variable_wave_oscillator.cpp
+                dsp/prng.cpp
             )
 
 pico_set_program_name(cz "cz")

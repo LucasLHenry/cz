@@ -2,7 +2,7 @@ from enum import Enum, auto
 import numpy as np
 import os
 
-TABLE_NUM_BITS = 10
+TABLE_NUM_BITS = 12
 TABLE_LEN = 2 ** TABLE_NUM_BITS
 SAMPLE_FREQ = 48000
 PATH_TO_TABLES = "/tables/"

@@ -5,6 +5,9 @@
 #include "../tables/waves.h"
 #include "../drivers/interpolator.hpp"
 #include "../hw_config.h"
+#include "prng.hpp"
+
+#define ONE_POLE(out, in, coefficient) out += (in - out) * coefficient
 
 class VariWaveOsc {
     public:
@@ -20,6 +23,8 @@ class VariWaveOsc {
         uint16_t* wave_pos_;
         uint32_t xfade_margin_;
         float volume_;
+        float aaf_coefficient_;
+        float value_;
 };
 
 #endif  // DSP_VARIABLE_WAVE_OSCILLATOR_H_

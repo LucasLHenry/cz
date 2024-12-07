@@ -54,7 +54,7 @@ int main() {
     while (true) {
         warp_pot.read();
         wave_pot.read();
-        freq = 30 + 100*(freq_pot.read() / 4096.0);
+        freq = 40 + 100*(freq_pot.read() / 4096.0);
 
     }
     return 0;
