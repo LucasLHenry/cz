@@ -1,22 +1,20 @@
 #ifndef DSP_DDS_CORE_H_
 #define DSP_DDS_CORE_H_
 
+#include <stdint.h>
+#include "../tables/waves.h"
+#include "prng.hpp"
+
 class DDSCore {
     public:
         DDSCore() {}
         ~DDSCore() {}
 
-        uint32_t acc, pha;
-        bool overflow;
-
-        inline void update();
-        void reset(uint32_t new_acc);
-        inline uint32_t get_acc();
+        uint32_t update();
+        void set_freq(float freq_hz);
     
     private:
-        uint32_t shifted_acc_;
-        uint32_t previous_shifted_acc_;
-        uint32_t shift_amount_;
+        uint32_t acc_, pha_;
 };
 
 #endif  // DSP_DDS_CORE_H_

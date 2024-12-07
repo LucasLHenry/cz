@@ -3,9 +3,9 @@
 
 #include "../drivers/audio_dac.hpp"
 #include "../tables/waves.h"
-#include "../drivers/interpolator.hpp"
 #include "../hw_config.h"
 #include "prng.hpp"
+#include "dds_core.hpp"
 
 #define ONE_POLE(out, in, coefficient) out += (in - out) * coefficient
 
@@ -18,8 +18,7 @@ class VariWaveOsc {
         void process(AudioDAC::Frame* buf, size_t size, float freq_hz);
     
     private:
-        uint32_t accumulator_;
-        uint32_t phasor_;
+        DDSCore dds;
         uint16_t* wave_pos_;
         uint32_t xfade_margin_;
         float volume_;

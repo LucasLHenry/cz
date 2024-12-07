@@ -1,18 +1,11 @@
 #include "dds_core.hpp"
 
-inline void DDSCore::update() {
-    previous_shifted_acc_ = shifted_acc_;
-    acc += pha;
-    shifted_acc_ = acc >> shift_amount_;
-    overflow = (previous_shifted_acc_ > shifted_acc_);
+uint32_t DDSCore::update() {
+    acc_ += pha_;
+    int32_t dither_val_ = PRNG::centered_lcg() >> 12;
+    return (acc_ + dither_val_) >> k_dds_downshift;
 }
 
-void DDSCore::reset(uint32_t new_acc) {
-    acc = new_acc;
-    shifted_acc_ = acc >> shift_amount_;
-    shifted_acc_ = shifted_acc_;
-}
-
-inline uint32_t DDSCore::get_acc() {
-    return shifted_acc_;
+void DDSCore::set_freq(float freq_hz) {
+    pha_ = static_cast<uint32_t>(freq_hz * k_hz_phasor);
 }

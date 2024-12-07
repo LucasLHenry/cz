@@ -9,16 +9,14 @@ void VariWaveOsc::init(uint16_t* wave_pos) {
 }
 
 void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq) {
-    phasor_ = static_cast<uint32_t>(freq * k_hz_phasor);
+    dds.set_freq(freq);
     
     // two sections: sine to tri, tri to saw
     bool in_sec_one = *wave_pos_ < xfade_margin_;
     float blend = static_cast<float>(*wave_pos_ % xfade_margin_) / xfade_margin_;
 
     for (uint idx = 0; idx < size; idx++) {
-        accumulator_ += phasor_;
-        int32_t dither_val = PRNG::centered_lcg() >> 12;
-        uint32_t shifted_accumulator = (accumulator_ + dither_val) >> k_dds_downshift;
+        uint32_t shifted_accumulator = dds.update();
         int32_t val1, val2;
         if (in_sec_one) {
             val1 = sine_table[shifted_accumulator];

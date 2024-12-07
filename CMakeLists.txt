@@ -48,7 +48,6 @@ project(cz C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
 add_executable(cz 
                 main.cpp 
                 drivers/audio_dac.cpp
@@ -56,7 +55,8 @@ add_executable(cz
                 drivers/potentiometer.cpp
                 dsp/variable_wave_oscillator.cpp
                 dsp/prng.cpp
-            )
+                dsp/dds_core.cpp
+              )
 
 pico_set_program_name(cz "cz")
 pico_set_program_version(cz "0.1")
