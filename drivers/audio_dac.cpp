@@ -58,7 +58,7 @@ void AudioDAC::init_dma(size_t block_size) {
     // Configure DMA to transfer from memory (buffer) to the PIO FIFO
     channel_config_set_transfer_data_size(&dma_config, DMA_SIZE_32);  // 32-bit transfers
     channel_config_set_dreq(&dma_config, pio_get_dreq(pio0, pio_sm, true));  // Data request when PIO needs more data
-        dma_channel_configure(
+    dma_channel_configure(
         dma_chan,
         &dma_config,
         &pio0->txf[pio_sm],   // Write address (PIO FIFO)

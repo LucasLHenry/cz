@@ -10,8 +10,7 @@
 #include "hardware/adc.h"
  
 #include "drivers/audio_dac.hpp"
-#include "drivers/interpolator.hpp"
-#include "drivers/potentiometer.hpp"
+#include "drivers/adc_input.hpp"
 #include "dsp/variable_wave_oscillator.hpp"
 #include "hw_config.h"
 
@@ -20,7 +19,7 @@ AudioDAC* DAC_REF_ = &audio_dac;
 
 VariWaveOsc osc;
 
-Potentiometer wave_pot, freq_pot, warp_pot;
+ADCInput wave_pot, freq_pot, warp_pot;
 
 float freq;
  
@@ -40,22 +39,20 @@ int main() {
  
     stdio_init_all();
     adc_init();
-    wave_pot.init(ADC_OVERSAMPLE_AMT, 0);
-    warp_pot.init(ADC_OVERSAMPLE_AMT, 1);
-    freq_pot.init(ADC_OVERSAMPLE_AMT, 2);
+    wave_pot.init(ADC_OVERSAMPLE_AMT, 26, POT);
+    warp_pot.init(ADC_OVERSAMPLE_AMT, 27, POT);
+    freq_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
 
-    interpolator_init();
-
-    osc.init(&wave_pot.value, &warp_pot.value);
+    osc.init(&wave_pot.value_u12, &warp_pot.value_u12);
 
     multicore_launch_core1(core1_entry_point);
 
     // Main loop
     while (true) {
-        warp_pot.read();
         wave_pot.read();
-        freq = 40 + 100*(freq_pot.read() / 4096.0);
-
+        warp_pot.read();
+        freq_pot.read();
+        freq = 40 + 100*freq_pot.value_f;
     }
     return 0;
 }

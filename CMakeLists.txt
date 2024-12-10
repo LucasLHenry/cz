@@ -52,8 +52,7 @@ add_executable(cz
                 main.cpp 
                 utils.cpp
                 drivers/audio_dac.cpp
-                drivers/interpolator.cpp
-                drivers/potentiometer.cpp
+                drivers/adc_input.cpp
                 dsp/variable_wave_oscillator.cpp
                 dsp/prng.cpp
                 dsp/dds_core.cpp
