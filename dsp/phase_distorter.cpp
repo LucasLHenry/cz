@@ -14,7 +14,7 @@ void PhaseDistorter::update() {
 }
 
 uint16_t PhaseDistorter::distort(uint16_t input_phase) {
-    return xfade(input_phase, kink_value(input_phase), blend_amt_); // + (PRNG::centered_lcg() >> 30);
+    return xfade(input_phase, kink_value(input_phase), blend_amt_); // + (rand_i32() >> 30);
 }
 
 uint16_t PhaseDistorter::kink_value(uint16_t input_phase) {

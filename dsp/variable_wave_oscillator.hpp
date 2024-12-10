@@ -5,7 +5,6 @@
 #include "../tables/waves.h"
 #include "../hw_config.h"
 #include "../utils.h"
-#include "prng.hpp"
 #include "dds_core.hpp"
 #include "phase_distorter.hpp"
 

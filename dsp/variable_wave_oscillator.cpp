@@ -30,7 +30,7 @@ void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq) {
         }
         int16_t wave_val = xfade(val1, val2, blend) * volume_;
         ONE_POLE(value_, wave_val, aaf_coefficient_);
-        // value_ += PRNG::centered_lcg() >> 29;
+        // value_ += rand_i32() >> 29;
         buf[idx].l = static_cast<int16_t>(value_);
         buf[idx].r = static_cast<int16_t>(value_);
     }

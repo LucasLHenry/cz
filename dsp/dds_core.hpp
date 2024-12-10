@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include "../tables/waves.h"
-#include "prng.hpp"
+#include "../utils.h"
 
 class DDSCore {
     public:

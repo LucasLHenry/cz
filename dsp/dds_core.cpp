@@ -7,7 +7,7 @@ void DDSCore::init(bool dither) {
 uint32_t DDSCore::update() {
     acc_ += pha_;
     if (dither_) {
-        int32_t dither_val_ = PRNG::centered_lcg() >> 12;
+        int32_t dither_val_ = rand_i32() >> 12;
         return (acc_ + dither_val_) >> k_dds_downshift;
     }
     return acc_ >> k_dds_downshift;
