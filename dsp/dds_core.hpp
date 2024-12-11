@@ -16,6 +16,7 @@ class DDSCore {
     
     private:
         bool dither_;
+        uint32_t dither_shift_;
         uint32_t acc_, pha_;
 };
 

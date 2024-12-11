@@ -1,26 +1,28 @@
 #include "phase_distorter.hpp"
 
-void PhaseDistorter::init(uint16_t* warp_amt) {
+Kink kink_;
+
+void PhaseDistorter::init(float* warp_amt) {
     warp_amt_ = warp_amt;
+    dds_.init(true);
+    algos_[0] = &kink_;
 }
 
-void PhaseDistorter::update() {
-    blend_amt_ = *warp_amt_ / 4096.0;
-    kink_amt = blend_amt_ * 0.7;
-    s1 = (1 - kink_amt) / (1 + kink_amt);
-    s2 = (1 + kink_amt) / (1 - kink_amt);
-    o2 = (k_wave_table_len/2) * (1 - kink_amt - s2*(1 + kink_amt));
-    kink_point = static_cast<uint16_t>(k_wave_table_len * (0.5 + kink_amt/2));
+void PhaseDistorter::update_params(float freq) {
+    dds_.set_freq(freq);
+    algos_[0]->update(*warp_amt_);
 }
 
-uint16_t PhaseDistorter::distort(uint16_t input_phase) {
-    return xfade(input_phase, kink_value(input_phase), blend_amt_); // + (rand_i32() >> 30);
+uint16_t PhaseDistorter::get_phase() {
+    uint32_t pha = dds_.update();
+    return pha >> k_dds_downshift;//algos_[0]->get_phase(pha) >> k_dds_downshift;
+    // return xfade(pha, kink_value(input_phase), blend_amt_); // + (rand_i32() >> 30);
 }
 
-uint16_t PhaseDistorter::kink_value(uint16_t input_phase) {
-    if (input_phase < kink_point) {
-        return static_cast<uint16_t>(s1 * input_phase);
-    } else {
-        return static_cast<uint16_t>(s2 * input_phase + o2);
-    }
-}
+// uint16_t PhaseDistorter::kink_value(uint16_t input_phase) {
+//     if (input_phase < kink_point) {
+//         return static_cast<uint16_t>(s1 * input_phase);
+//     } else {
+//         return static_cast<uint16_t>(s2 * input_phase + o2);
+//     }
+// }

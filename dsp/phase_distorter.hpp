@@ -4,23 +4,25 @@
 #include "../tables/warps.h"
 #include "../tables/waves.h"
 #include "../utils.h"
+#include "dds_core.hpp"
+#include "phase_distortion/pd_algo.hpp"
+#include "phase_distortion/kink.hpp"
+
+#define NUM_PD_ALGOS 1
 
 class PhaseDistorter {
     public:
         PhaseDistorter() {}
         ~PhaseDistorter() {}
 
-        void init(uint16_t* warp_amt);
-        void update();
-        uint16_t distort(uint16_t input_phase);
+        void init(float* warp_amt);
+        void update_params(float freq);
+        uint16_t get_phase();
     
     private:
-        uint16_t* warp_amt_;
-        float blend_amt_;
-        float s1, s2, o2, kink_amt;
-        uint16_t kink_point;
-        uint16_t kink_value(uint16_t input_phase);
+        DDSCore dds_;
+        float* warp_amt_;
+        PDAlgo* algos_[NUM_PD_ALGOS];
 };
-
 
 #endif  // DSP_PHASE_DISTORTER_H_

@@ -54,9 +54,10 @@ add_executable(cz
                 drivers/audio_dac.cpp
                 drivers/adc_input.cpp
                 dsp/variable_wave_oscillator.cpp
-                dsp/prng.cpp
                 dsp/dds_core.cpp
                 dsp/phase_distorter.cpp
+                dsp/phase_distortion/pd_algo.cpp
+                dsp/phase_distortion/kink.cpp
               )
 
 pico_set_program_name(cz "cz")
