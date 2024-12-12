@@ -43,7 +43,7 @@ int main() {
     warp_pot.init(ADC_OVERSAMPLE_AMT, 27, POT);
     freq_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
 
-    osc.init(&wave_pot.value_u12, &warp_pot.value_u12);
+    osc.init(&wave_pot.value_f, &warp_pot.value_u12);
 
     multicore_launch_core1(core1_entry_point);
 
