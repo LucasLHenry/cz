@@ -56,6 +56,7 @@ add_executable(cz
                 dsp/variable_wave_oscillator.cpp
                 dsp/dds_core.cpp
                 dsp/phase_distorter.cpp
+                dsp/phase_distortion/pd_algo.cpp
               )
 
 pico_set_program_name(cz "cz")

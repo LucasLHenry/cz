@@ -5,6 +5,7 @@
 #include "../tables/waves.h"
 #include "../utils.h"
 #include "dds_core.hpp"
+#include "phase_distortion/pd_algo.hpp"
 
 class PhaseDistorter {
     public:

@@ -17,7 +17,7 @@ void PhaseDistorter::update(float freq) {
 
 uint16_t PhaseDistorter::distort() {
     uint16_t phase = dds_.update();
-    return xfade(phase, kink_value(phase), blend_amt_); // + (rand_i32() >> 30);
+    return kink_value(phase);
 }
 
 uint16_t PhaseDistorter::kink_value(uint16_t input_phase) {
