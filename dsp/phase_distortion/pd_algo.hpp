@@ -8,7 +8,7 @@ class PDAlgo {
         PDAlgo() {}
         virtual ~PDAlgo();
 
-        virtual void update_params(float distort_amt);
+        virtual void update_params(float warp);
         virtual uint32_t process_phase(uint32_t pha);
 };
 

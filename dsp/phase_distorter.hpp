@@ -6,6 +6,9 @@
 #include "../utils.h"
 #include "dds_core.hpp"
 #include "phase_distortion/pd_algo.hpp"
+#include "phase_distortion/kink.hpp"
+
+#define NUM_ALGOS 1
 
 class PhaseDistorter {
     public:
@@ -18,10 +21,8 @@ class PhaseDistorter {
     
     private:
         DDSCore dds_;
+        PDAlgo* algos_[NUM_ALGOS];
         float max_warp_;
-        float s1, s2, o2, kink_amt;
-        uint32_t kink_point;
-        uint32_t kink_value(uint32_t input_phase);
 };
 
 
