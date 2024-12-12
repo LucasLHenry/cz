@@ -8,7 +8,7 @@
 #include "dds_core.hpp"
 #include "phase_distorter.hpp"
 
-#define NUM_WAVES 3
+#define NUM_WAVES 4
 
 class VariWaveOsc {
     public:

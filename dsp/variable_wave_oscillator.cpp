@@ -9,6 +9,7 @@ void VariWaveOsc::init() {
     waves_[0] = &sine_table[0];
     waves_[1] = &tri_table[0];
     waves_[2] = &saw_table[0];
+    waves_[3] = &reso_ramp_table[0];
 }
 
 void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp) {
