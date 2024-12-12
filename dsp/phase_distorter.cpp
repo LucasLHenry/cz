@@ -1,17 +1,17 @@
 #include "phase_distorter.hpp"
 
-void PhaseDistorter::init(uint16_t* warp_amt) {
-    warp_amt_ = warp_amt;
+void PhaseDistorter::init() {
     dds_.init(true);
+    max_warp_ = 0.8;
 }
 
-void PhaseDistorter::update(float freq) {
+void PhaseDistorter::update(float freq, float warp) {
     dds_.set_freq(freq);
-    blend_amt_ = (*warp_amt_ / 4096.0)*0.8;
-    s1 = 1.0 / (1.0 - blend_amt_);
-    s2 = 1.0 / (1.0 + blend_amt_);
-    o2 = UINT32_MAX * (1.0 - s2*(1.0 - blend_amt_)) / 2.0;
-    kink_point = static_cast<uint32_t>(UINT32_MAX * (1.0 - blend_amt_) / 2.0);
+    warp *= max_warp_;
+    s1 = 1.0 / (1.0 - warp);
+    s2 = 1.0 / (1.0 + warp);
+    o2 = UINT32_MAX * (1.0 - s2*(1.0 - warp)) / 2.0;
+    kink_point = static_cast<uint32_t>(UINT32_MAX * (1.0 - warp) / 2.0);
 }
 
 uint16_t PhaseDistorter::distort() {

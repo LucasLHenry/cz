@@ -12,14 +12,13 @@ class PhaseDistorter {
         PhaseDistorter() {}
         ~PhaseDistorter() {}
 
-        void init(uint16_t* warp_amt);
-        void update(float freq);
+        void init();
+        void update(float freq, float warp);
         uint16_t distort();
     
     private:
         DDSCore dds_;
-        uint16_t* warp_amt_;
-        float blend_amt_;
+        float max_warp_;
         float s1, s2, o2, kink_amt;
         uint32_t kink_point;
         uint32_t kink_value(uint32_t input_phase);

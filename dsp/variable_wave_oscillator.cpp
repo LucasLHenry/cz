@@ -1,22 +1,21 @@
 #include "variable_wave_oscillator.hpp"
 
-void VariWaveOsc::init(float* wave_pos, uint16_t* warp_amt) {
-    wave_pos_ = wave_pos;
+void VariWaveOsc::init() {
     xfade_margin_ = 1 << (ADC_BITS - 1);
     volume_ = 0.4;
     float ctf_freq_hz = 24000;
     aaf_coefficient_ = (ctf_freq_hz / OUTPUT_SAMPLE_RATE) / (1 + (ctf_freq_hz / OUTPUT_SAMPLE_RATE));
-    pd.init(warp_amt);
+    pd.init();
     waves_[0] = &sine_table[0];
     waves_[1] = &tri_table[0];
     waves_[2] = &saw_table[0];
 }
 
-void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq) {
-    pd.update(freq);
+void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp) {
+    pd.update(freq, warp);
     
     // two sections: sine to tri, tri to saw
-    float wave = *wave_pos_ * (NUM_WAVES - 1);
+    wave *= NUM_WAVES - 1;
     MAKE_INTEGRAL_FRACTIONAL(wave);
 
     for (uint idx = 0; idx < size; idx++) {

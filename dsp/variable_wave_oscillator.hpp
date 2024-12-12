@@ -15,12 +15,11 @@ class VariWaveOsc {
         VariWaveOsc() {}
         ~VariWaveOsc() {}
 
-        void init(float* wave_pos, uint16_t* warp_amt);
-        void process(AudioDAC::Frame* buf, size_t size, float freq_hz);
+        void init();
+        void process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp);
     
     private:
         PhaseDistorter pd;
-        float* wave_pos_;
         uint32_t xfade_margin_;
         float volume_;
         float aaf_coefficient_;
