@@ -8,9 +8,9 @@ uint32_t DDSCore::update() {
     acc_ += pha_;
     if (dither_) {
         int32_t dither_val_ = rand_i32() >> 12;
-        return (acc_ + dither_val_) >> k_dds_downshift;
+        return acc_ + dither_val_;
     }
-    return acc_ >> k_dds_downshift;
+    return acc_;
 }
 
 void DDSCore::set_freq(float freq_hz) {

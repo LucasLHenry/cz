@@ -57,6 +57,7 @@ add_executable(cz
                 dsp/dds_core.cpp
                 dsp/phase_distorter.cpp
                 dsp/phase_distortion/pd_algo.cpp
+                dsp/phase_distortion/kink.cpp
               )
 
 pico_set_program_name(cz "cz")
