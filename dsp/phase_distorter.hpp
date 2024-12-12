@@ -4,6 +4,7 @@
 #include "../tables/warps.h"
 #include "../tables/waves.h"
 #include "../utils.h"
+#include "dds_core.hpp"
 
 class PhaseDistorter {
     public:
@@ -11,10 +12,11 @@ class PhaseDistorter {
         ~PhaseDistorter() {}
 
         void init(uint16_t* warp_amt);
-        void update();
-        uint16_t distort(uint16_t input_phase);
+        void update(float freq);
+        uint16_t distort();
     
     private:
+        DDSCore dds_;
         uint16_t* warp_amt_;
         float blend_amt_;
         float s1, s2, o2, kink_amt;

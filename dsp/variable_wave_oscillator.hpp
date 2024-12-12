@@ -17,7 +17,6 @@ class VariWaveOsc {
         void process(AudioDAC::Frame* buf, size_t size, float freq_hz);
     
     private:
-        DDSCore dds;
         PhaseDistorter pd;
         uint16_t* wave_pos_;
         uint32_t xfade_margin_;
