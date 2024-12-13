@@ -7,6 +7,8 @@
 #include "dds_core.hpp"
 #include "phase_distortion/pd_algo.hpp"
 #include "phase_distortion/kink.hpp"
+#include "phase_distortion/sync.hpp"
+#include "phase_distortion/reverse.hpp"
 
 #define NUM_ALGOS 1
 

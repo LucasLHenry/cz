@@ -6,10 +6,11 @@ void VariWaveOsc::init() {
     float ctf_freq_hz = 24000;
     aaf_coefficient_ = (ctf_freq_hz / OUTPUT_SAMPLE_RATE) / (1 + (ctf_freq_hz / OUTPUT_SAMPLE_RATE));
     pd.init();
-    waves_[0] = &sine_table[0];
-    waves_[1] = &tri_table[0];
-    waves_[2] = &saw_table[0];
-    waves_[3] = &reso_ramp_table[0];
+    waves_[0] = &reso_ramp_table[0];
+    waves_[1] = &reso_tri_table[0];
+    waves_[2] = &sine_table[0];
+    waves_[3] = &tri_table[0];
+    waves_[4] = &saw_table[0];
 }
 
 void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp) {

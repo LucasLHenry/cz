@@ -24,6 +24,7 @@ def main():
     sine = generate_sine()
     tri = generate_tri()
     reso_ramp = generate_reso_ramp()
+    reso_tri = generate_reso_tri()
 
     downshift = 32 - TABLE_NUM_BITS
     hz_phasor = int(2**32 / SAMPLE_FREQ)
@@ -39,6 +40,7 @@ def main():
         write_table(f, "saw_table", saw)
         write_table(f, "tri_table", tri)
         write_table(f, "reso_ramp_table", reso_ramp)
+        write_table(f, "reso_tri_table", reso_tri)
         f.write(file_footer)
         
     
@@ -74,7 +76,7 @@ def generate_saw() -> list[float]:
 def generate_sine() -> list[float]:
     arr = []
     for i in range(TABLE_LEN):
-        val = np.sin(2*np.pi*i/TABLE_LEN)
+        val = np.cos(2*np.pi*i/TABLE_LEN)
         arr.append(val)
     return arr
 
@@ -96,6 +98,20 @@ def generate_reso_ramp() -> list[float]:
     for i in range(TABLE_LEN):
         val = (-np.cos(2*sine_freq_mult*np.pi*i/TABLE_LEN) + 1) / 2
         val *= i/TABLE_LEN
+        val -= 0.5
+        val *= 2
+        arr.append(val)
+    return arr
+
+def generate_reso_tri() -> list[float]:
+    arr = []
+    sine_freq_mult = 16
+    for i in range(TABLE_LEN):
+        val = (-np.cos(2*sine_freq_mult*np.pi*i/TABLE_LEN) + 1) / 2
+        if i < TABLE_LEN/2:
+            val *= i*2/TABLE_LEN
+        else:
+            val *= (TABLE_LEN - i)*2/TABLE_LEN
         val -= 0.5
         val *= 2
         arr.append(val)
