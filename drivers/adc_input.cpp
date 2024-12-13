@@ -15,6 +15,7 @@ void ADCInput::configure_mux(uint mux_idx, uint mux_num_pins, uint* mux_pins) {
     for (uint i = 0; i < mux_num_pins_; i++) {
         mux_pins_[i] = mux_pins[i];
         gpio_init(mux_pins_[i]);
+        gpio_set_dir(mux_pins_[i], GPIO_OUT);
     }
 }
 

@@ -39,9 +39,13 @@ int main() {
  
     stdio_init_all();
     adc_init();
-    wave_pot.init(ADC_OVERSAMPLE_AMT, 26, POT);
-    warp_pot.init(ADC_OVERSAMPLE_AMT, 27, POT);
+    uint mux_pins[3] = {21, 20, 19};
+    wave_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
+    wave_pot.configure_mux(0, 3, mux_pins);
+    warp_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
+    warp_pot.configure_mux(1, 3, mux_pins);
     freq_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
+    freq_pot.configure_mux(2, 3, mux_pins);
 
     osc.init();
 
