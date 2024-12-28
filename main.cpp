@@ -19,12 +19,12 @@ AudioDAC* DAC_REF_ = &audio_dac;
 
 VariWaveOsc osc;
 
-ADCInput wave_pot, freq_pot, warp_pot;
+ADCInput wave_pot, freq_pot, warp_pot, algo_pot;
 
 float freq;
  
 void buffer_fill(AudioDAC::Frame* buf, size_t size) {
-    osc.process(buf, size, freq, wave_pot.value_f, warp_pot.value_f);
+    osc.process(buf, size, freq, wave_pot.value_f, warp_pot.value_f, algo_pot.value_f);
 }
 
 void core1_entry_point() {
@@ -46,6 +46,8 @@ int main() {
     warp_pot.configure_mux(1, 3, mux_pins);
     freq_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
     freq_pot.configure_mux(2, 3, mux_pins);
+    algo_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
+    algo_pot.configure_mux(3, 3, mux_pins);
 
     osc.init();
 
@@ -56,6 +58,7 @@ int main() {
         wave_pot.read();
         warp_pot.read();
         freq_pot.read();
+        algo_pot.read();
         freq = 40 + 100*freq_pot.value_f;
     }
     return 0;

@@ -13,8 +13,8 @@ void VariWaveOsc::init() {
     waves_[4] = &saw_table[0];
 }
 
-void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp) {
-    pd.update(freq, warp);
+void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp, float algo) {
+    pd.update(freq, warp, algo);
     
     // two sections: sine to tri, tri to saw
     wave *= NUM_WAVES - 1;
@@ -22,8 +22,8 @@ void VariWaveOsc::process(AudioDAC::Frame* buf, size_t size, float freq, float w
 
     for (uint idx = 0; idx < size; idx++) {
         uint32_t shifted_accumulator = pd.distort();
-        int32_t val1 = waves_[wave_integral][shifted_accumulator];
-        int32_t val2 = waves_[wave_integral+1][shifted_accumulator];
+        int16_t val1 = waves_[wave_integral][shifted_accumulator];
+        int16_t val2 = waves_[wave_integral+1][shifted_accumulator];
 
         int16_t wave_val = xfade(val1, val2, wave_fractional) * volume_;
         ONE_POLE(value_, wave_val, aaf_coefficient_);

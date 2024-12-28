@@ -10,7 +10,7 @@
 #include "phase_distortion/sync.hpp"
 #include "phase_distortion/reverse.hpp"
 
-#define NUM_ALGOS 1
+#define NUM_ALGOS 3
 
 class PhaseDistorter {
     public:
@@ -18,13 +18,15 @@ class PhaseDistorter {
         ~PhaseDistorter() {}
 
         void init();
-        void update(float freq, float warp);
+        void update(float freq, float warp, float algo);
         uint16_t distort();
     
     private:
         DDSCore dds_;
         PDAlgo* algos_[NUM_ALGOS];
         float max_warp_;
+        uint32_t algo_idx_;
+        float algo_xfade_amt_;
 };
 
 
