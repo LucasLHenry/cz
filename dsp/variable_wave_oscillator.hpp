@@ -8,7 +8,11 @@
 #include "dds_core.hpp"
 #include "phase_distorter.hpp"
 
-#define NUM_WAVES 5
+#define NUM_WAVES 3
+
+#define _RESO_TABLE_NAME() RESO_WAVE_TABLE_NAME
+#define _VALUE(x) x
+#define RESO_TABLE(x) _RESO_TABLE_NAME() ## _VALUE(x)
 
 class VariWaveOsc {
     public:
@@ -25,6 +29,7 @@ class VariWaveOsc {
         float aaf_coefficient_;
         float value_;
         const int16_t* waves_[NUM_WAVES];
+        const int16_t* reso_waves_[NUM_RESO_WAVES];
 };
 
 #endif  // DSP_VARIABLE_WAVE_OSCILLATOR_H_
