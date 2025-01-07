@@ -4,7 +4,6 @@
 #include "../tables/warps.h"
 #include "../tables/waves.h"
 #include "../utils.h"
-#include "dds_core.hpp"
 #include "phase_distortion/pd_algo.hpp"
 #include "phase_distortion/kink.hpp"
 #include "phase_distortion/sync.hpp"
@@ -19,11 +18,10 @@ class PhaseDistorter {
         ~PhaseDistorter() {}
 
         void init();
-        void update(float freq, float warp, float algo);
-        uint16_t distort();
+        void update_params(float warp, float algo);
+        uint32_t process_phase(uint32_t pha);
     
     private:
-        DDSCore dds_;
         PDAlgo* algos_[NUM_ALGOS];
         float max_warp_;
         uint32_t algo_idx_;

@@ -7,7 +7,6 @@ ReverseAlgo reverse;
 DoubleKinkAlgo double_kink;
 
 void PhaseDistorter::init() {
-    dds_.init(false);
     algos_[0] = &kink;
     algos_[1] = &sync;
     algos_[2] = &reverse;
@@ -15,8 +14,7 @@ void PhaseDistorter::init() {
     max_warp_ = 0.8;
 }
 
-void PhaseDistorter::update(float freq, float warp, float algo) {
-    dds_.set_freq(freq);
+void PhaseDistorter::update_params(float warp, float algo) {
     warp *= max_warp_;
     algo *= NUM_ALGOS - 1;
     MAKE_INTEGRAL_FRACTIONAL(algo);
@@ -26,9 +24,8 @@ void PhaseDistorter::update(float freq, float warp, float algo) {
     algos_[algo_idx_+1]->update_params(warp);
 }
 
-uint16_t PhaseDistorter::distort() {
-    uint32_t phase = dds_.update();
-    uint32_t val1 = algos_[algo_idx_]->process_phase(phase);
-    uint32_t val2 = algos_[algo_idx_+1]->process_phase(phase);
-    return xfade(val1, val2, algo_xfade_amt_) >> k_dds_downshift;
+uint32_t PhaseDistorter::process_phase(uint32_t pha) {
+    uint32_t val1 = algos_[algo_idx_]->process_phase(pha);
+    uint32_t val2 = algos_[algo_idx_+1]->process_phase(pha);
+    return xfade(val1, val2, algo_xfade_amt_);
 }

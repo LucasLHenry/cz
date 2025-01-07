@@ -59,6 +59,7 @@ target_sources(cz PRIVATE
                 drivers/encoder.cpp
                 dsp/variable_wave_oscillator.cpp
                 dsp/dds_core.cpp
+                dsp/synth.cpp
                 dsp/phase_distorter.cpp
                 dsp/phase_distortion/pd_algo.cpp
                 dsp/phase_distortion/kink.cpp

@@ -11,20 +11,20 @@
  
 #include "drivers/audio_dac.hpp"
 #include "drivers/adc_input.hpp"
-#include "dsp/variable_wave_oscillator.hpp"
+#include "dsp/synth.hpp"
 #include "hw_config.h"
 
 AudioDAC audio_dac;
 AudioDAC* DAC_REF_ = &audio_dac;
 
-VariWaveOsc osc;
+Synth synth;
 
 ADCInput wave_pot, freq_pot, warp_pot, algo_pot;
 
 float freq;
  
 void buffer_fill(AudioDAC::Frame* buf, size_t size) {
-    osc.process(buf, size, freq, wave_pot.value_f, warp_pot.value_f, algo_pot.value_f);
+    synth.process(buf, size, freq, wave_pot.value_f, warp_pot.value_f, algo_pot.value_f);
 }
 
 void core1_entry_point() {
@@ -49,7 +49,7 @@ int main() {
     algo_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
     algo_pot.configure_mux(3, 3, mux_pins);
 
-    osc.init();
+    synth.init();
 
     multicore_launch_core1(core1_entry_point);
 
