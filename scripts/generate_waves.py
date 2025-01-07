@@ -8,7 +8,7 @@ TABLE_LEN = 2 ** TABLE_NUM_BITS
 SAMPLE_FREQ = 48000
 PATH_TO_TABLES = "/tables/"
 FILE_NAME = "waves.h"
-RESO_WAVE_HARMONICS = [32, 16, 8, 4, 3]
+RESO_WAVE_HARMONICS = [20, 18, 16, 14, 12, 10, 8, 6, 4, 2]
 RESO_WAVE_TYPE = "tri"
 
 
@@ -52,11 +52,6 @@ def write_reso_tables(f, sine_table):
     total_table.append(sine_table)
     write_2d_table(f, "reso_waves", total_table)
     f.write(f"#define NUM_RESO_WAVES {len(RESO_WAVE_HARMONICS) + 1}\n")
-    # f.write(f"const int16_t* reso_tables[{len(RESO_WAVE_HARMONICS) + 1}] = {{\n")
-    # for harmonic in RESO_WAVE_HARMONICS:
-    #     f.write(f"\treso_{RESO_WAVE_TYPE}_table_{harmonic},\n")
-    # f.write(f"\tsine_table,\n")
-    # f.write("};\n")
         
 def write_2d_table(f, table_name: str, table: list[list[float]]):
     f.write(f"const int16_t {table_name}[][{TABLE_LEN}] = {{\n")
