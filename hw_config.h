@@ -7,6 +7,8 @@
 
 #define DAC_PIO_SM 0
 
+#define ENC_PIO_SM 1
+
 #define CLK_FREQ_Hz 150000
 #define OUTPUT_SAMPLE_RATE 48000
 #define ADC_OVERSAMPLE_AMT 8
