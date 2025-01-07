@@ -47,12 +47,16 @@ project(cz C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
+
 # Add executable. Default name is the project name, version 0.1
-add_executable(cz 
+add_executable(cz)
+target_sources(cz PRIVATE 
                 main.cpp 
                 utils.cpp
                 drivers/audio_dac.cpp
                 drivers/adc_input.cpp
+                drivers/gpio_irq_handler.cpp
+                drivers/encoder.cpp
                 dsp/variable_wave_oscillator.cpp
                 dsp/dds_core.cpp
                 dsp/phase_distorter.cpp
@@ -60,6 +64,7 @@ add_executable(cz
                 dsp/phase_distortion/kink.cpp
                 dsp/phase_distortion/sync.cpp
                 dsp/phase_distortion/reverse.cpp
+                dsp/phase_distortion/double_kink.cpp
               )
 
 pico_set_program_name(cz "cz")

@@ -9,8 +9,9 @@
 #include "phase_distortion/kink.hpp"
 #include "phase_distortion/sync.hpp"
 #include "phase_distortion/reverse.hpp"
+#include "phase_distortion/double_kink.hpp"
 
-#define NUM_ALGOS 3
+#define NUM_ALGOS 4
 
 class PhaseDistorter {
     public:

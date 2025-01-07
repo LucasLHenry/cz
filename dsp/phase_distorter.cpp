@@ -4,12 +4,14 @@
 KinkAlgo kink;
 SyncAlgo sync;
 ReverseAlgo reverse;
+DoubleKinkAlgo double_kink;
 
 void PhaseDistorter::init() {
     dds_.init(false);
     algos_[0] = &kink;
     algos_[1] = &sync;
     algos_[2] = &reverse;
+    algos_[3] = &double_kink;
     max_warp_ = 0.8;
 }
 
