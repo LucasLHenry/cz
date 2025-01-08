@@ -1,7 +1,7 @@
 #include "synth.hpp"
 
 void Synth::init() {
-    dds_core_.init(true);
+    dds_core_.init();
     phase_distorter_.init();
     osc_.init();
 }
@@ -14,6 +14,7 @@ void Synth::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, f
     for (uint i = 0; i < size; i++) {
         uint32_t pha = dds_core_.gen_phase();
         pha = phase_distorter_.process_phase(pha);
+        pha += rand_i32() >> 12;  // dithering
         int16_t val = osc_.process_sample(pha);
         buf[i].l = val;
         buf[i].r = val;

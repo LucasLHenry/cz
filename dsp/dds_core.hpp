@@ -10,12 +10,11 @@ class DDSCore {
         DDSCore() {}
         ~DDSCore() {}
 
-        void init(bool dither);
+        void init();
         uint32_t gen_phase();
         void update_params(float freq_hz);
     
     private:
-        bool dither_;
         uint32_t acc_, pha_;
 };
 

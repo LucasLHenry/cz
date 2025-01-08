@@ -6,6 +6,7 @@
 #include "variable_wave_oscillator.hpp"
 #include "../drivers/audio_dac.hpp"
 #include "../tables/waves.h"
+#include "../utils.h"
 
 class Synth {
     public:
