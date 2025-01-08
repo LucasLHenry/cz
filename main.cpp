@@ -11,6 +11,8 @@
  
 #include "drivers/audio_dac.hpp"
 #include "drivers/adc_input.hpp"
+#include "drivers/encoder.hpp"
+
 #include "dsp/synth.hpp"
 #include "hw_config.h"
 
@@ -18,6 +20,9 @@ AudioDAC audio_dac;
 AudioDAC* DAC_REF_ = &audio_dac;
 
 Synth synth;
+
+Encoder encoder;
+// QuadratureDecoder encoder()
 
 ADCInput wave_pot, freq_pot, warp_pot, algo_pot;
 
@@ -34,7 +39,7 @@ void core1_entry_point() {
 }
 
 int main() {
-    set_sys_clock_khz(CLK_FREQ_Hz, true);
+    // set_sys_clock_khz(CLK_FREQ_Hz, true);
     sleep_ms(100);
  
     stdio_init_all();
@@ -49,9 +54,12 @@ int main() {
     algo_pot.init(ADC_OVERSAMPLE_AMT, 28, POT);
     algo_pot.configure_mux(3, 3, mux_pins);
 
+    encoder.init(3, true, true);
+
     synth.init();
 
     multicore_launch_core1(core1_entry_point);
+    freq = 40;
 
     // Main loop
     while (true) {
@@ -59,7 +67,7 @@ int main() {
         warp_pot.read();
         freq_pot.read();
         algo_pot.read();
-        freq = 40 + 100*freq_pot.value_f;
+        freq = 40 +10*encoder.get();
     }
     return 0;
 }

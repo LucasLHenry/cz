@@ -1,6 +1,8 @@
 #include "encoder.hpp"
 
-void Encoder::init(uint gpio_pin_base, bool pullup) {
+void Encoder::init(uint gpio_pin_base, bool pullup, bool invert) {
+    invert_ = invert;
+
     init_gpio(gpio_pin_base, pullup);
     init_pio(gpio_pin_base);
     init_dma();
@@ -55,5 +57,10 @@ void Encoder::init_dma() {
 
 
 int32_t Encoder::get() {
-    return count_;
+    int32_t dif = invert_? prev_count_ - count_ : count_ - prev_count_;
+    if (dif < -1) dif = -1;
+    if (dif > 1) dif = 1;
+    prev_count_ = count_;
+    out_count_ += dif;
+    return out_count_ >> 1;
 }
