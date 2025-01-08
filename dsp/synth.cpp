@@ -1,9 +1,12 @@
 #include "synth.hpp"
 
-void Synth::init() {
+void Synth::init(float volume) {
+    volume_ = volume;
     dds_core_.init();
     phase_distorter_.init();
     osc_.init();
+    lpf_coeff_ = ewma_filter_coefficient(24000);
+    hpf_coeff_ = ewma_filter_coefficient(10);
 }
 
 void Synth::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp, float algo) {
@@ -16,7 +19,12 @@ void Synth::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, f
         pha = phase_distorter_.process_phase(pha);
         pha += rand_i32() >> 12;  // dithering
         int16_t val = osc_.process_sample(pha);
-        buf[i].l = val;
-        buf[i].r = val;
+        ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
+        // ONE_POLE_HPF(hpf_val_, lpf_val_, hpf_coeff_);
+        float out_val = lpf_val_;
+
+        out_val *= volume_;
+        buf[i].l = out_val;
+        buf[i].r = out_val;
     }
 }

@@ -56,7 +56,7 @@ int main() {
 
     encoder.init(3, true, true);
 
-    synth.init();
+    synth.init(0.4);
 
     multicore_launch_core1(core1_entry_point);
     freq = 40;

@@ -7,6 +7,9 @@
 #include "encoder.pio.h"
 #include "gpio_irq_handler.hpp"
 
+// based on Adam Green's Quadrature Decoder driver for the RP2040
+// https://github.com/adamgreen/QuadratureDecoder
+
 class Encoder {
     public:
         Encoder() {}
@@ -24,13 +27,6 @@ class Encoder {
         void init_gpio(uint gpio_pin_base, bool pullup);
         void init_pio(uint gpio_pin_base);
         void init_dma();
-
-        void pin_a_callback(uint gpio_pin, uint32_t events);
-        void pin_b_callback(uint gpio_pin, uint32_t events);
-
-        enum { DMA_MAX_TRANSFER_COUNT = 0xFFFFFFFF, DMA_REFRESH_THRESHOLD = 0x80000000 };
-
-        void restart_dma();
 };
 
 #endif  // DRIVERS_ENCODER_H_

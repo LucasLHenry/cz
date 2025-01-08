@@ -13,13 +13,16 @@ class Synth {
         Synth() {}
         ~Synth() {}
 
-        void init();
+        void init(float volume);
         void process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp, float algo);
 
     private:
         DDSCore dds_core_;
         PhaseDistorter phase_distorter_;
         VariWaveOsc osc_;
+        float lpf_coeff_, hpf_coeff_;
+        int16_t lpf_val_, hpf_val_;
+        float volume_;
 };
 
 

@@ -20,10 +20,6 @@ class VariWaveOsc {
         int16_t process_sample(uint32_t phase);
     
     private:
-        uint32_t xfade_margin_;
-        float volume_;
-        float aaf_coefficient_;
-        float value_;
         const int16_t* waves_[NUM_WAVES];
         const int16_t* reso_waves_[NUM_RESO_WAVES];
         bool knob_left_;
