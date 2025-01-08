@@ -53,6 +53,7 @@ add_executable(cz)
 target_sources(cz PRIVATE 
                 main.cpp 
                 utils.cpp
+                ui.cpp
                 drivers/audio_dac.cpp
                 drivers/adc_input.cpp
                 drivers/gpio_irq_handler.cpp

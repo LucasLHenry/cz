@@ -6,11 +6,12 @@
 
 // courtesy of Emilie Gillet
 #define ONE_POLE_LPF(out, in, coefficient) out += (in - out) * coefficient
-#define ONE_POLE_HPF(out, in, coefficient) out += 1 - (in - out) * coefficient
 
 #define MAKE_INTEGRAL_FRACTIONAL(x) \
-  int32_t x ## _integral = static_cast<int32_t>(x); \
-  float x ## _fractional = x - static_cast<float>(x ## _integral);
+    int32_t x ## _integral = static_cast<int32_t>(x); \
+    float x ## _fractional = x - static_cast<float>(x ## _integral);
+
+#define CLAMP(x, a, b) MAX(MIN(x, b), a)
 
 uint32_t rand_u32();
 int32_t rand_i32();

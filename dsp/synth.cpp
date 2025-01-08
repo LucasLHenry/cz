@@ -9,15 +9,15 @@ void Synth::init(float volume) {
     hpf_coeff_ = ewma_filter_coefficient(10);
 }
 
-void Synth::process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp, float algo) {
-    dds_core_.update_params(freq);
-    phase_distorter_.update_params(warp, algo);
-    osc_.update_params(wave);
+void Synth::process(AudioDAC::Frame* buf, size_t size, UI::Params params) {
+    dds_core_.update_params(params.freq_hz);
+    phase_distorter_.update_params(params.warp, params.algo);
+    osc_.update_params(params.wave);
     
     for (uint i = 0; i < size; i++) {
         uint32_t pha = dds_core_.gen_phase();
         pha = phase_distorter_.process_phase(pha);
-        pha += rand_i32() >> 12;  // dithering
+        // pha += rand_i32() >> 12;  // dithering
         int16_t val = osc_.process_sample(pha);
         ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
         // ONE_POLE_HPF(hpf_val_, lpf_val_, hpf_coeff_);

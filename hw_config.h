@@ -16,9 +16,10 @@
 #define DAC_BUFFER_SIZE 8
 #define ADC_BITS 12
 
-#define NUM_ADC_INPUTS 3
-#define PITCH_INPUT 0
-#define WAVE_INPUT 1
-#define WARP_INPUT 2
+
+#define MUX_PIN 28
+#define ALGO_MUX_IDX 0
+#define WAVE_MUX_IDX 1
+#define WARP_MUX_IDX 2
 
 #endif // hW_CONFIG_H_

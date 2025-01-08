@@ -56,7 +56,7 @@ void Encoder::init_dma() {
 }
 
 
-int32_t Encoder::get() {
+void Encoder::read() {
     int32_t dif = invert_? prev_count_ - count_ : count_ - prev_count_;
     // clamp change to help with debouncing. We're sampling at a rate that
     // means that we can guarantee it won't be turning more than one click
@@ -64,6 +64,6 @@ int32_t Encoder::get() {
     if (dif < -1) dif = -1;
     if (dif > 1) dif = 1;
     prev_count_ = count_;
-    out_count_ += dif;
-    return out_count_ >> 1;
+    value_i32 += dif;
+    value_i32 >> 1;
 }

@@ -7,6 +7,7 @@
 #include "../drivers/audio_dac.hpp"
 #include "../tables/waves.h"
 #include "../utils.h"
+#include "../ui.hpp"
 
 class Synth {
     public:
@@ -14,7 +15,7 @@ class Synth {
         ~Synth() {}
 
         void init(float volume);
-        void process(AudioDAC::Frame* buf, size_t size, float freq, float wave, float warp, float algo);
+        void process(AudioDAC::Frame* buf, size_t size, UI::Params params);
 
     private:
         DDSCore dds_core_;

@@ -16,12 +16,12 @@ class Encoder {
         ~Encoder() {}
 
         void init(uint gpio_pin_base, bool pullup, bool invert);
-        int32_t get();
+        void read();
+        int32_t value_i32;
         uint8_t dma_chan, pio_sm;
 
     private:
         int32_t prev_count_, count_;
-        int32_t out_count_;
         bool invert_;
         
         void init_gpio(uint gpio_pin_base, bool pullup);
