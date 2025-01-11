@@ -1,22 +1,16 @@
 #include "phase_distorter.hpp"
 
-
-KinkAlgo kink;
-SyncAlgo sync;
-ReverseAlgo reverse;
-DoubleKinkAlgo double_kink;
-
-void PhaseDistorter::init() {
-    algos_[0] = &kink;
-    algos_[1] = &sync;
-    algos_[2] = &reverse;
-    algos_[3] = &double_kink;
+void PhaseDistorter::init(PDAlgo** algos, size_t num_algos) {
+    for (uint i = 0; i < num_algos; i++) {
+        algos_[i] = algos[i];
+    }
+    num_algos_ = num_algos;
     max_warp_ = 0.8;
 }
 
 void PhaseDistorter::update_params(float warp, float algo) {
     warp *= max_warp_;
-    algo *= NUM_ALGOS - 1;
+    algo *= num_algos_ - 1;
     MAKE_INTEGRAL_FRACTIONAL(algo);
     algo_idx_ = algo_integral;
     algo_xfade_amt_ = algo_fractional;
