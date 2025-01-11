@@ -49,8 +49,6 @@ class AudioDAC {
         Frame* next_read_buffer;
 };
 
-extern AudioDAC* DAC_REF_;
-
 void dma_handler_();
 
 #endif // DRIVERS_AUDIO_DAC_H_

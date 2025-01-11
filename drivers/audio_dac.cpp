@@ -1,5 +1,7 @@
 #include "audio_dac.hpp"
 
+AudioDAC audio_dac;
+
 void AudioDAC::init(uint32_t sample_rate, size_t block_size) {
     sample_rate_ = sample_rate;
     block_size_ = block_size;
@@ -76,7 +78,7 @@ void AudioDAC::init_dma(size_t block_size) {
 }
 
 void dma_handler_() {
-    dma_hw->ints1 = 1u << DAC_REF_->dma_chan;
-    DAC_REF_->swap_buffers();
-    DAC_REF_->fill();
+    dma_hw->ints1 = 1u << audio_dac.dma_chan;
+    audio_dac.swap_buffers();
+    audio_dac.fill();
 }
