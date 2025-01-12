@@ -62,6 +62,7 @@ target_sources(cz PRIVATE
                 dsp/dds_core.cpp
                 dsp/synth.cpp
                 dsp/phase_distorter.cpp
+                dsp/phase_distortion/default.cpp
                 dsp/phase_distortion/pd_algo.cpp
                 dsp/phase_distortion/kink.cpp
                 dsp/phase_distortion/sync.cpp

@@ -5,10 +5,7 @@
 #include "phase_distorter.hpp"
 #include "variable_wave_oscillator.hpp"
 #include "phase_distortion/pd_algo.hpp"
-#include "phase_distortion/kink.hpp"
-#include "phase_distortion/sync.hpp"
-#include "phase_distortion/reverse.hpp"
-#include "phase_distortion/double_kink.hpp"
+#include "phase_distortion/all_algos.hpp"
 
 #include "../drivers/audio_dac.hpp"
 #include "../tables/waves.h"
