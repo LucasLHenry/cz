@@ -1,28 +1,14 @@
-#include <stdio.h>
-#include <math.h>
-
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
-
-#include "hardware/pio.h"
-#include "hardware/clocks.h"
-#include "hardware/dma.h"
-#include "hardware/adc.h"
  
 #include "drivers/audio_dac.hpp"
 #include "ui.hpp"
-
 #include "dsp/synth.hpp"
 #include "hw_config.h"
 
-AudioDAC audio_dac;
-AudioDAC* DAC_REF_ = &audio_dac;
-
-Synth synth;
-
-Encoder encoder;
-
 UI ui;
+Synth synth;
+extern AudioDAC audio_dac;
  
 void buffer_fill(AudioDAC::Frame* buf, size_t size) {
     synth.process(buf, size, ui.get_params());
@@ -43,9 +29,6 @@ int main() {
     synth.init(0.4);
     multicore_launch_core1(core1_entry_point);
 
-    // Main loop
-    while (true) {
-        ui.poll();
-    }
+    while (true) ui.poll();
     return 0;
 }
