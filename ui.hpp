@@ -5,9 +5,11 @@
 
 #include "hardware/adc.h"
 
+#include "utils.h"
 #include "hw_config.h"
 #include "drivers/adc_input.hpp"
 #include "drivers/encoder.hpp"
+#include "tables/pitch_lut.h"
 
 class UI {
     public:
@@ -21,9 +23,9 @@ class UI {
             float algo;
         } Params;
     
-    void init();
-    void poll();
-    Params get_params();
+        void init();
+        void poll();
+        Params get_params();
     
     private:
         ADCInput wave_pot_;
@@ -33,7 +35,8 @@ class UI {
         Params raw_params_;
         Params interpolated_params_;
 
-        static float get_freq(int32_t enc_course, int32_t enc_fine);
+        float get_freq(int32_t enc_course, int32_t enc_fine);
+        float pitch_filter_coefficient_;
 };
 
 #endif  // UI_H_
