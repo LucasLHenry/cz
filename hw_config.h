@@ -18,8 +18,8 @@
 
 
 #define MUX_PIN 28
-#define ALGO_MUX_IDX 0
-#define WAVE_MUX_IDX 1
-#define WARP_MUX_IDX 2
+#define ALGO_MUX_IDX 1
+#define WAVE_MUX_IDX 2
+#define WARP_MUX_IDX 0
 
 #endif // hW_CONFIG_H_
