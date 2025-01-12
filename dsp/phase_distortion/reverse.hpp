@@ -11,7 +11,7 @@ class ReverseAlgo : public PDAlgo {
         virtual uint32_t process_phase(uint32_t pha);
 
     private:
-        virtual void _update_params();
+        virtual void update_params_();
         uint64_t reverse_point_;
 };
 

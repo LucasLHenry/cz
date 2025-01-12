@@ -13,11 +13,11 @@ class PDAlgo {
         virtual uint32_t process_phase(uint32_t pha);
     
     protected:
-        float _warp;
-        virtual void _update_params();
+        float warp_;
+        virtual void update_params_();
     
     private:
-        bool _started;
+        bool started_;
 };
 
 

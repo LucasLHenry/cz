@@ -12,7 +12,7 @@ class DoubleKinkAlgo : public PDAlgo {
         virtual uint32_t process_phase(uint32_t pha);
 
     private:
-        virtual void _update_params();
+        virtual void update_params_();
         float interp_;
         uint32_t kink_point_1_, kink_point_2_;
         uint32_t offset_1_, offset_2_;

@@ -11,7 +11,7 @@ class KinkAlgo : public PDAlgo {
         virtual uint32_t process_phase(uint32_t pha);
 
     private:
-        virtual void _update_params();
+        virtual void update_params_();
         float s1, s2, o2;
         uint32_t kink_point;
 };

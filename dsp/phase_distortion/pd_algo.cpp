@@ -3,12 +3,12 @@
 PDAlgo::~PDAlgo() = default;
 
 void PDAlgo::update_params(float warp) {
-    if (fabsf(warp - _warp) > 0.01) {
-        _warp = warp;
-        _update_params();
-    } else if (!_started) {
-        _warp = warp;
-        _started = true;
-        _update_params();
+    if (fabsf(warp - warp_) > 0.01) {
+        warp_ = warp;
+        update_params_();
+    } else if (!started_) {
+        warp_ = warp;
+        started_ = true;
+        update_params_();
     }
 }
