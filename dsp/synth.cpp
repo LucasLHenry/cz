@@ -40,12 +40,9 @@ void Synth::process(AudioDAC::Frame* buf, size_t size, UI::Params params) {
         uint32_t pha = dds_core_.gen_phase();
         pha = phase_distorter2_.process_phase(pha);
         pha = phase_distorter1_.process_phase(pha);
-        // phase_distorter_.update_params(params.warp, 0);
-        // pha = phase_distorter_.process_phase(pha);
         pha += rand_i32() >> 13;  // dithering
         int16_t val = osc_.process_sample(pha);
         ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
-        // ONE_POLE_HPF(hpf_val_, lpf_val_, hpf_coeff_);
         float out_val = lpf_val_;
 
         out_val *= volume_;
