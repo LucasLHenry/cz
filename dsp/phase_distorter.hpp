@@ -7,10 +7,6 @@
 #include "../tables/waves.h"
 #include "../utils.h"
 #include "phase_distortion/pd_algo.hpp"
-// #include "phase_distortion/kink.hpp"
-// #include "phase_distortion/sync.hpp"
-// #include "phase_distortion/reverse.hpp"
-// #include "phase_distortion/double_kink.hpp"
 
 #define MAX_NUM_ALGOS 12
 
