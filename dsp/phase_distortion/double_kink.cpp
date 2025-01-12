@@ -7,8 +7,8 @@ DoubleKinkAlgo::DoubleKinkAlgo () {
     offset_2_ = UINT32_MAX * 0.666666;
 }
 
-void DoubleKinkAlgo::update_params(float warp) {
-    interp_ = warp;
+void DoubleKinkAlgo::_update_params() {
+    interp_ = _warp;
 }
 
 uint32_t DoubleKinkAlgo::process_phase(uint32_t pha) {
