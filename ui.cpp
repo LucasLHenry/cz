@@ -39,7 +39,8 @@ UI::Params UI::get_params() {
 float UI::get_freq(int32_t enc_course, int32_t enc_fine) {
     // lets say one encoder click in course mode is a semitone
     // and one encoder click in fine mode is 5 cents
-    return 40.0+5*(enc_course >> 1);
+    float raw_freq = 40.0+5*(enc_course >> 1);
+    return (raw_freq < 5)? 5.0 : raw_freq;
     // float num_semitones = enc_course + enc_fine * 0.05;
     // num_semitones = CLAMP(num_semitones, min_semitones, max_semitones);
     // uint32_t octave = 0;

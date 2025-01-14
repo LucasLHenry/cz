@@ -29,6 +29,8 @@ class Synth {
         float lpf_coeff_, hpf_coeff_;
         int16_t lpf_val_, hpf_val_;
         float volume_;
+        float phase_;
+        float freq_;
 };
 
 
