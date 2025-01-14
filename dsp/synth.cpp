@@ -14,17 +14,19 @@ HighSyncAlgo sync_high1;
 void Synth::init(float volume, UI::Params* params) {
     volume_ = volume;
     params_ = params;
-    PDAlgo* algos1[4] = {
+    PDAlgo* algos1[6] = {
+        &default1,
         &kink1,
         &double_kink1,
         &sync1,
         &sync_high1,
+        &reverse1,
     };
     PDAlgo* algos2[2] = {
         &kink2,
         &double_kink2,
     };
-    phase_distorter1_.init(algos1, 4);
+    phase_distorter1_.init(algos1, 6);
     // phase_distorter2_.init(algos2, 2);
     osc_.init();
     lpf_coeff_ = ewma_filter_coefficient(20000);
@@ -40,11 +42,10 @@ void Synth::process(AudioDAC::Frame* buf, size_t size) {
     for (uint i = 0; i < size; i++) {
         phase_ += freq_;
         if (phase_ > 1.0) phase_ -= 1.0;
-        // pha = phase_distorter1_.process_phase(pha);
+        float distorted_phase = phase_distorter1_.process_phase(phase_);
         // pha = phase_distorter2_.process_phase(pha);
-        // pha += rand_i32() >> 13;  // dithering
-        int16_t val = osc_.process_sample(phase_);
-        // ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
+        int16_t val = osc_.process_sample(distorted_phase);
+        ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
         float out_val = val;
 
         out_val *= volume_;

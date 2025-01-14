@@ -16,8 +16,8 @@ void PhaseDistorter::update_params(float warp, float algo) {
     algos_[algo_idx_+1]->update_params(warp);
 }
 
-uint32_t PhaseDistorter::process_phase(uint32_t pha) {
-    uint32_t val1 = algos_[algo_idx_]->process_phase(pha);
-    uint32_t val2 = algos_[algo_idx_+1]->process_phase(pha);
+float PhaseDistorter::process_phase(float pha) {
+    float val1 = algos_[algo_idx_]->process_phase(pha);
+    float val2 = algos_[algo_idx_+1]->process_phase(pha);
     return xfade(val1, val2, algo_xfade_amt_);
 }

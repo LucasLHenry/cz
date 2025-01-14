@@ -10,8 +10,8 @@ class PDAlgo {
         virtual ~PDAlgo();
 
         void update_params(float warp);
-        virtual uint32_t process_phase(uint32_t pha);
-        float max_warp = 1;
+        virtual float process_phase(float pha);
+        float max_warp = 1.0;
     
     protected:
         float warp_;

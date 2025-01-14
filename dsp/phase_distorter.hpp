@@ -17,7 +17,7 @@ class PhaseDistorter {
 
         void init(PDAlgo** algos, size_t num_algos);
         void update_params(float warp, float algo);
-        uint32_t process_phase(uint32_t pha);
+        float process_phase(float pha);
     
     private:
         PDAlgo* algos_[MAX_NUM_ALGOS];

@@ -8,12 +8,12 @@ class KinkAlgo : public PDAlgo {
         KinkAlgo() {}
         ~KinkAlgo() {}
 
-        virtual uint32_t process_phase(uint32_t pha);
+        virtual float process_phase(float pha);
 
     private:
         virtual void update_params_();
         float s1, s2, o2;
-        uint32_t kink_point;
+        float kink_point;
 };
 
 #endif  // PHASE_DISTORTION_KINK_H_

@@ -8,7 +8,7 @@ class HighSyncAlgo : public PDAlgo {
         HighSyncAlgo() {}
         ~HighSyncAlgo() {}
 
-        virtual uint32_t process_phase(uint32_t pha);
+        virtual float process_phase(float pha);
 
     private:
         virtual void update_params_();

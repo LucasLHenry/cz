@@ -18,7 +18,7 @@ int32_t rand_i32();
 float ewma_filter_coefficient(float freq_hz);
 
 template <typename T>
-T xfade(T a, T b, float blend);
+inline T xfade(T a, T b, float blend);
 #include "utils_impl.h"
 
 inline float interpolate(const float* table, float index, float size) {

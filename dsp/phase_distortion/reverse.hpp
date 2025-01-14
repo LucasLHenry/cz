@@ -8,11 +8,11 @@ class ReverseAlgo : public PDAlgo {
         ReverseAlgo() {}
         ~ReverseAlgo() {}
 
-        virtual uint32_t process_phase(uint32_t pha);
+        virtual float process_phase(float pha);
 
     private:
         virtual void update_params_();
-        uint64_t reverse_point_;
+        float reverse_point_;
 };
 
 #endif  // PHASE_DISTORTION_REVERSE_H_
