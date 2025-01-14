@@ -6,5 +6,6 @@
 #include "double_kink.hpp"
 #include "reverse.hpp"
 #include "sync.hpp"
+#include "sync_high.hpp"
 
 #endif  // DSP_PHASE_DISTORTION_ALL_ALGOS_H_

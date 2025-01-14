@@ -68,6 +68,7 @@ target_sources(cz PRIVATE
                 dsp/phase_distortion/sync.cpp
                 dsp/phase_distortion/reverse.cpp
                 dsp/phase_distortion/double_kink.cpp
+                dsp/phase_distortion/sync_high.cpp
               )
 
 pico_set_program_name(cz "cz")
