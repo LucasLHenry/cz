@@ -11,7 +11,7 @@ Synth synth;
 extern AudioDAC audio_dac;
  
 void buffer_fill(AudioDAC::Frame* buf, size_t size) {
-    synth.process(buf, size, ui.get_params());
+    synth.process(buf, size);
 }
 
 void core1_entry_point() {
@@ -26,7 +26,7 @@ int main() {
  
     stdio_init_all();
     ui.init();
-    synth.init(0.4);
+    synth.init(0.4, &ui.params);
     multicore_launch_core1(core1_entry_point);
 
     while (true) ui.poll();

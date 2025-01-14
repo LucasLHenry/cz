@@ -21,9 +21,8 @@ template <typename T>
 T xfade(T a, T b, float blend);
 #include "utils_impl.h"
 
-inline float interpolate_wrap(const float* table, float index, float size) {
-    index -= static_cast<float>(static_cast<int32_t>(index));
-    index *= size;
+inline float interpolate(const float* table, float index, float size) {
+    index *= size - 1;
     MAKE_INTEGRAL_FRACTIONAL(index)
     float a = table[index_integral];
     float b = table[index_integral + 1];
