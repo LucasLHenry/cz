@@ -21,7 +21,6 @@ class PhaseDistorter {
     
     private:
         PDAlgo* algos_[MAX_NUM_ALGOS];
-        float max_warp_;
         uint32_t algo_idx_;
         float algo_xfade_amt_;
         uint num_algos_;

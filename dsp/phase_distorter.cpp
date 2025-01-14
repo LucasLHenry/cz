@@ -5,11 +5,9 @@ void PhaseDistorter::init(PDAlgo** algos, size_t num_algos) {
         algos_[i] = algos[i];
     }
     num_algos_ = num_algos;
-    max_warp_ = 0.8;
 }
 
 void PhaseDistorter::update_params(float warp, float algo) {
-    warp *= max_warp_;
     algo *= num_algos_ - 1;
     MAKE_INTEGRAL_FRACTIONAL(algo);
     algo_idx_ = algo_integral;
