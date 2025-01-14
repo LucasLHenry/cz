@@ -25,7 +25,7 @@ class UI {
     
         void init();
         void poll();
-        Params get_params();
+        Params params;
     
     private:
         ADCInput wave_pot_;
@@ -33,7 +33,6 @@ class UI {
         ADCInput algo_pot_;
         Encoder pitch_enc_;
         Params raw_params_;
-        Params interpolated_params_;
 
         float get_freq(int32_t enc_course, int32_t enc_fine);
         float pitch_filter_coefficient_;

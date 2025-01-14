@@ -17,15 +17,15 @@ class Synth {
         Synth() {}
         ~Synth() {}
 
-        void init(float volume);
-        void process(AudioDAC::Frame* buf, size_t size, UI::Params params);
+        void init(float volume, UI::Params* params);
+        void process(AudioDAC::Frame* buf, size_t size);
 
     private:
         PDAlgo** algos_;
-        DDSCore dds_core_;
         PhaseDistorter phase_distorter1_;
         PhaseDistorter phase_distorter2_;   
         VariWaveOsc osc_;
+        UI::Params* params_;
         float lpf_coeff_, hpf_coeff_;
         int16_t lpf_val_, hpf_val_;
         float volume_;

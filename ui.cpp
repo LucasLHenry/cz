@@ -22,18 +22,10 @@ void UI::poll() {
     warp_pot_.read();
     algo_pot_.read();
     pitch_enc_.read();
-    raw_params_.wave = wave_pot_.value_f;
-    raw_params_.warp = warp_pot_.value_f;
-    raw_params_.algo = algo_pot_.value_f;
-    raw_params_.freq_hz = get_freq(pitch_enc_.value_i32, 0);
-}
-
-UI::Params UI::get_params() {
-    interpolated_params_.wave = raw_params_.wave;
-    interpolated_params_.warp = raw_params_.warp;
-    interpolated_params_.algo = raw_params_.algo;
-    ONE_POLE_LPF(interpolated_params_.freq_hz, raw_params_.freq_hz, pitch_filter_coefficient_);
-    return interpolated_params_;
+    params.wave = wave_pot_.value_f;
+    params.warp = warp_pot_.value_f;
+    params.algo = algo_pot_.value_f;
+    ONE_POLE_LPF(params.freq_hz, get_freq(pitch_enc_.value_i32, 0), pitch_filter_coefficient_);
 }
 
 float UI::get_freq(int32_t enc_course, int32_t enc_fine) {
