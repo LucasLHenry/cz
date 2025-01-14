@@ -21,7 +21,7 @@ void core1_entry_point() {
 }
 
 int main() {
-    set_sys_clock_khz(CLK_FREQ_Hz, true);
+    set_sys_clock_khz(CLK_FREQ_kHz, true);
     sleep_ms(100);
  
     stdio_init_all();
