@@ -6,7 +6,6 @@
 
 // courtesy of Emilie Gillet
 #define ONE_POLE_LPF(out, in, coefficient) out += (in - out) * coefficient
-
 #define MAKE_INTEGRAL_FRACTIONAL(x) \
     int32_t x ## _integral = static_cast<int32_t>(x); \
     float x ## _fractional = x - static_cast<float>(x ## _integral);
@@ -21,5 +20,14 @@ float ewma_filter_coefficient(float freq_hz);
 template <typename T>
 T xfade(T a, T b, float blend);
 #include "utils_impl.h"
+
+inline float interpolate_wrap(const float* table, float index, float size) {
+    index -= static_cast<float>(static_cast<int32_t>(index));
+    index *= size;
+    MAKE_INTEGRAL_FRACTIONAL(index)
+    float a = table[index_integral];
+    float b = table[index_integral + 1];
+    return a + (b - a) * index_fractional;
+}
 
 #endif  // UTILS_H_

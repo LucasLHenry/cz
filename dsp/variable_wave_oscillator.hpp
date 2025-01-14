@@ -21,7 +21,7 @@ class VariWaveOsc {
     
     private:
         // const int16_t* waves_[NUM_WAVES];
-        const int16_t* reso_waves_[NUM_RESO_WAVES];
+        const float* reso_waves_[NUM_RESO_WAVES];
         // bool knob_left_;
         int32_t wave_val_i_;
         float wave_val_f_;
