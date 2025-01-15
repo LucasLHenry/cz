@@ -27,7 +27,7 @@ void Synth::init(float volume, UI::Params* params) {
         &double_kink2,
     };
     phase_distorter1_.init(algos1, 6);
-    // phase_distorter2_.init(algos2, 2);
+    phase_distorter2_.init(algos2, 2);
     osc_.init();
     lpf_coeff_ = ewma_filter_coefficient(20000);
     hpf_coeff_ = ewma_filter_coefficient(10);
@@ -36,14 +36,14 @@ void Synth::init(float volume, UI::Params* params) {
 void Synth::process(AudioDAC::Frame* buf, size_t size) {
     freq_ = params_->freq_hz * k_hz_phasor_f;
     phase_distorter1_.update_params(params_->warp, params_->algo);
-    // phase_distorter2_.update_params(params.warp, params.algo);
+    phase_distorter2_.update_params(1.0 - params_->warp, params_->algo);
     osc_.update_params(params_->wave);
     
     for (uint i = 0; i < size; i++) {
         phase_ += freq_;
         if (phase_ > 1.0) phase_ -= 1.0;
         float distorted_phase = phase_distorter1_.process_phase(phase_);
-        // pha = phase_distorter2_.process_phase(pha);
+        distorted_phase = phase_distorter2_.process_phase(distorted_phase);
         int16_t val = osc_.process_sample(distorted_phase);
         ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
         float out_val = val;

@@ -32,10 +32,11 @@ class UI {
         ADCInput warp_pot_;
         ADCInput algo_pot_;
         Encoder pitch_enc_;
-        Params raw_params_;
 
-        float get_freq(int32_t enc_course, int32_t enc_fine);
+        float get_note(int32_t enc_course, int32_t enc_fine);
+        float get_freq(float note);
         float pitch_filter_coefficient_;
+        float smoothed_note_;
 };
 
 #endif  // UI_H_

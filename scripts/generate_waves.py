@@ -8,7 +8,7 @@ TABLE_LEN = 2 ** TABLE_NUM_BITS
 SAMPLE_FREQ = 48000
 PATH_TO_TABLES = "/tables/"
 FILE_NAME = "waves.h"
-RESO_WAVE_HARMONICS = [20, 18, 16, 14, 12, 10, 8, 6, 4, 2]
+RESO_WAVE_HARMONICS = [1, 2, 4, 8, 12, 16, 20] # [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 1]
 RESO_WAVE_TYPE = "tri"
 
 
@@ -23,9 +23,9 @@ array_footer = "};\n"
 file_footer = "#endif  // TABLES_WAVES_H_"
 
 def main():
-    saw = generate_saw()
+    # saw = generate_saw()
     sine = generate_sine()
-    tri = generate_tri()
+    # tri = generate_tri()
 
     downshift = 32 - TABLE_NUM_BITS
     hz_phasor = int(2**32 / SAMPLE_FREQ)
@@ -36,29 +36,31 @@ def main():
         f.write(file_header)
         f.write(f"const uint32_t k_wave_table_len = {TABLE_LEN};\n")
         f.write(f"const uint32_t k_dds_downshift = {downshift};\n")
+        # f.write(f"const float k_dds_inverse_remainder = {1.0 / (2**downshift - 1):E};\n")
+        # f.write(f"const uint32_t k_dds_mask = {2**downshift - 1};\n")
         f.write(f"const uint32_t k_hz_phasor = {hz_phasor};\n")
-        write_table(f, "sine_table", sine)
-        write_table(f, "saw_table", saw)
-        write_table(f, "tri_table", tri)
-        write_reso_tables(f, sine)
+        f.write(f"const float k_hz_phasor_f = {1.0 / SAMPLE_FREQ};\n")
+        # write_table(f, "sine_table", sine)
+        # write_table(f, "saw_table", saw)
+        # write_table(f, "tri_table", tri)
+        write_reso_tables(f)
         f.write(file_footer)
         
    
-def write_reso_tables(f, sine_table):
+def write_reso_tables(f):
     total_table = []
     for harmonic in RESO_WAVE_HARMONICS:
         table = generate_reso_ramp(harmonic) if RESO_WAVE_TYPE == "ramp" else generate_reso_tri(harmonic)
         total_table.append(table)
-    total_table.append(sine_table)
     write_2d_table(f, "reso_waves", total_table)
-    f.write(f"#define NUM_RESO_WAVES {len(RESO_WAVE_HARMONICS) + 1}\n")
+    f.write(f"#define NUM_RESO_WAVES {len(RESO_WAVE_HARMONICS)}\n")
         
 def write_2d_table(f, table_name: str, table: list[list[float]]):
-    f.write(f"const int16_t {table_name}[][{TABLE_LEN}] = {{\n")
+    f.write(f"const float {table_name}[][{TABLE_LEN}] = {{\n")
     for sublist in table:
         f.write("{")
         for i in range(TABLE_LEN):
-            val = int(sublist[i] * (2**15 - 1))
+            val = sublist[i]
             arr_write_item(f, i , val, 32, TABLE_LEN)
         f.write("},")
     f.write("};\n")
@@ -114,7 +116,8 @@ def generate_reso_ramp(freq_mult: int) -> list[float]:
     arr = []
     for i in range(TABLE_LEN):
         val = (-np.cos(2*freq_mult*np.pi*i/TABLE_LEN) + 1) / 2
-        val *= i/TABLE_LEN
+        if freq_mult != 1:
+            val *= i/TABLE_LEN
         val -= 0.5
         val *= 2
         arr.append(val)
@@ -124,10 +127,11 @@ def generate_reso_tri(freq_mult: int) -> list[float]:
     arr = []
     for i in range(TABLE_LEN):
         val = (-np.cos(2*freq_mult*np.pi*i/TABLE_LEN) + 1) / 2
-        if i < TABLE_LEN/2:
-            val *= i*2/TABLE_LEN
-        else:
-            val *= (TABLE_LEN - i)*2/TABLE_LEN
+        if freq_mult != 1:
+            if i < TABLE_LEN/2:
+                val *= i*2/TABLE_LEN
+            else:
+                val *= (TABLE_LEN - i)*2/TABLE_LEN
         val -= 0.5
         val *= 2
         arr.append(val)

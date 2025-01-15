@@ -25,29 +25,19 @@ void UI::poll() {
     params.wave = wave_pot_.value_f;
     params.warp = warp_pot_.value_f;
     params.algo = algo_pot_.value_f;
-    ONE_POLE_LPF(params.freq_hz, get_freq(pitch_enc_.value_i32, 0), pitch_filter_coefficient_);
+    ONE_POLE_LPF(smoothed_note_, get_note(pitch_enc_.value_i32, 0), pitch_filter_coefficient_);
+    params.freq_hz = get_freq(smoothed_note_);
 }
 
-float UI::get_freq(int32_t enc_course, int32_t enc_fine) {
-    // lets say one encoder click in course mode is a semitone
-    // and one encoder click in fine mode is 5 cents
-    float raw_freq = 40.0+5*(enc_course >> 1);
-    return (raw_freq < 5)? 5.0 : raw_freq;
-    // float num_semitones = enc_course + enc_fine * 0.05;
-    // num_semitones = CLAMP(num_semitones, min_semitones, max_semitones);
-    // uint32_t octave = 0;
-    // while (num_semitones > 12) {
-    //     num_semitones -= 12.0;
-    //     octave++;
-    // }
-    // num_semitones *= pitch_multiplier;
-    // MAKE_INTEGRAL_FRACTIONAL(num_semitones);
-    // float ratio1 = pitch_lut[num_semitones_integral];
-    // float ratio2 = pitch_lut[num_semitones_integral+1];
-    // float pitch = xfade(ratio1, ratio2, num_semitones_fractional);
-    // while (octave > 0) {
-    //     pitch *= 2;
-    //     octave--;
-    // }
-    // return pitch;
+float UI::get_note(int32_t enc_course, int32_t enc_fine) {
+    float num_semitones = min_semitones + (enc_course >> 1) + 0.1 * enc_fine;
+    return CLAMP(num_semitones, min_semitones, max_semitones);
+}
+
+float UI::get_freq(float note) {
+    float octave = note * pitch_multiplier;
+    MAKE_INTEGRAL_FRACTIONAL(octave);
+    float freq_hz = interpolate(pitch_lut, octave_fractional, pitch_lut_table_len);
+    freq_hz *= static_cast<float>(1 << octave_integral);
+    return freq_hz;
 }
