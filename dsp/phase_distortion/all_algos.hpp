@@ -8,5 +8,6 @@
 #include "sync.hpp"
 #include "sync_high.hpp"
 #include "bitcrush.hpp"
+#include "bitfade.hpp"
 
 #endif  // DSP_PHASE_DISTORTION_ALL_ALGOS_H_

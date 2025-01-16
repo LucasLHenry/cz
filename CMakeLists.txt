@@ -68,6 +68,7 @@ target_sources(cz PRIVATE
                 dsp/phase_distortion/double_kink.cpp
                 dsp/phase_distortion/sync_high.cpp
                 dsp/phase_distortion/bitcrush.cpp
+                dsp/phase_distortion/bitfade.cpp
               )
 
 pico_set_program_name(cz "cz")
