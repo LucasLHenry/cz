@@ -24,7 +24,7 @@ class Synth {
         PhaseDistorter phase_distorter2_;
         UI::Params* params_;
         float lpf_coeff_;
-        int16_t lpf_val_;
+        float lpf_val_;
         float volume_;
         float phase_;
         float freq_;

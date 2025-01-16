@@ -22,6 +22,8 @@ class UI {
             float wave;
             float warp;
             float algo;
+            float volume;
+            float phase_offset;
         } Params;
     
         void init();
@@ -32,6 +34,8 @@ class UI {
         ADCInput wave_pot_;
         ADCInput warp_pot_;
         ADCInput algo_pot_;
+        ADCInput volume_pot_;
+        ADCInput phase_pot_;
         Encoder pitch_enc_;
 
         float get_note(int32_t enc_course, int32_t enc_fine);

@@ -13,10 +13,19 @@
 
 #define CLAMP(x, a, b) MAX(MIN(x, b), a)
 
-uint32_t rand_u32();
-int32_t rand_i32();
+inline uint32_t rand_u32() {
+    static uint64_t val = 1234;  // seed
+    val = (val*134775813 + 1) % (1 << 31);
+    return static_cast<uint32_t>(val);
+}
 
-float ewma_filter_coefficient(float freq_hz);
+inline int32_t rand_i32() {
+    return static_cast<int32_t>(rand_u32() - (1 << 31));
+}
+
+inline float ewma_filter_coefficient(float freq_hz) {
+    return (freq_hz / OUTPUT_SAMPLE_RATE) / (1 + (freq_hz / OUTPUT_SAMPLE_RATE));
+}
 
 template <typename T>
 inline T xfade(T a, T b, float blend);
@@ -35,6 +44,10 @@ inline float pow2f(float x) {
     float lut_val = interpolate(pitch_lut, x_fractional, pitch_lut_table_len);
     lut_val *= static_cast<float>(1 << x_integral);
     return lut_val;
+}
+
+inline float soft_limit(float x) {
+  return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
 }
 
 #endif  // UTILS_H_

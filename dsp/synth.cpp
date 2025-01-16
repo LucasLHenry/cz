@@ -47,16 +47,19 @@ void Synth::process(AudioDAC::Frame* buf, size_t size) {
         // phase distortion
         float distorted_phase = phase_distorter1_.process_phase(phase_);
         distorted_phase = phase_distorter2_.process_phase(distorted_phase);
+
+        distorted_phase += params_->phase_offset;
+        if (distorted_phase > 1.0) distorted_phase -= 1.0;
         
         // waveform generation
         float val1 = interpolate(reso_waves[wave_integral], distorted_phase, k_wave_table_len);
         float val2 = interpolate(reso_waves[wave_integral+1], distorted_phase, k_wave_table_len);
-        int16_t val = static_cast<int16_t>((val1 + (val2 - val1)*wave_fractional)*INT16_MAX);
+        float val = val1 + (val2 - val1)*wave_fractional;
 
         // post-processing and output
         ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
-        lpf_val_ *= volume_;
-        buf[i].l = lpf_val_;
-        buf[i].r = lpf_val_;
+        int16_t out_val = soft_limit(lpf_val_ * params_->volume)*0.4 * INT16_MAX;
+        buf[i].l = out_val;
+        buf[i].r = out_val;
     }
 }

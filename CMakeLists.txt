@@ -52,7 +52,6 @@ pico_sdk_init()
 add_executable(cz)
 target_sources(cz PRIVATE 
                 main.cpp 
-                utils.cpp
                 ui.cpp
                 drivers/audio_dac.cpp
                 drivers/adc_input.cpp

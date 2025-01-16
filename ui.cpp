@@ -6,11 +6,15 @@ void UI::init() {
     wave_pot_.init(ADC_OVERSAMPLE_AMT, MUX_PIN, POT);
     warp_pot_.init(ADC_OVERSAMPLE_AMT, MUX_PIN, POT);
     algo_pot_.init(ADC_OVERSAMPLE_AMT, MUX_PIN, POT);
+    volume_pot_.init(ADC_OVERSAMPLE_AMT, MUX_PIN, POT);
+    phase_pot_.init(ADC_OVERSAMPLE_AMT, MUX_PIN, POT);
 
     uint mux_pins[3] = {21, 20, 19};
     wave_pot_.configure_mux(WAVE_MUX_IDX, 3, mux_pins);
     warp_pot_.configure_mux(WARP_MUX_IDX, 3, mux_pins);
     algo_pot_.configure_mux(ALGO_MUX_IDX, 3, mux_pins);
+    volume_pot_.configure_mux(3, 3, mux_pins);
+    phase_pot_.configure_mux(6, 3, mux_pins);
 
     pitch_enc_.init(ENC_PIN_BASE, true, true);
 
@@ -26,9 +30,13 @@ void UI::poll() {
     warp_pot_.read();
     algo_pot_.read();
     pitch_enc_.read();
+    volume_pot_.read();
+    phase_pot_.read();
     params.wave = wave_pot_.value_f;
     params.warp = warp_pot_.value_f;
     params.algo = algo_pot_.value_f;
+    params.volume = volume_pot_.value_f*1.5 + 0.4;
+    params.phase_offset = phase_pot_.value_f;
 
     if (gpio_get(ENC_BTN_PIN) == false) enc_fine_ += pitch_enc_.change;
     else enc_course_ += pitch_enc_.change;
