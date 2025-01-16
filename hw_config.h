@@ -9,12 +9,15 @@
 
 #define ENC_PIO_SM 1
 
-#define CLK_FREQ_kHz 300000
+#define CLK_FREQ_kHz 150000
 #define OUTPUT_SAMPLE_RATE 48000
 #define ADC_OVERSAMPLE_AMT 32
 #define ADC_POT_LPF_AMT 0.1
 #define DAC_BUFFER_SIZE 8
 #define ADC_BITS 12
+
+#define ENC_BTN_PIN 2
+#define ENC_PIN_BASE 3
 
 
 #define MUX_PIN 28

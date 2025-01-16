@@ -66,4 +66,5 @@ void Encoder::read() {
     prev_count_ = count_;
     value_i32 += dif;
     value_i32 >> 1;
+    change = dif;
 }

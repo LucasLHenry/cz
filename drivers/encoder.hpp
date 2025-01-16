@@ -17,7 +17,7 @@ class Encoder {
 
         void init(uint gpio_pin_base, bool pullup, bool invert);
         void read();
-        int32_t value_i32;
+        int32_t value_i32, change;
         uint8_t dma_chan, pio_sm;
 
     private:

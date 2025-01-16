@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "hardware/adc.h"
+#include "hardware/gpio.h"
 
 #include "utils.h"
 #include "hw_config.h"
@@ -37,6 +38,8 @@ class UI {
         float get_freq(float note);
         float pitch_filter_coefficient_;
         float smoothed_note_;
+
+        int32_t enc_course_, enc_fine_;
 };
 
 #endif  // UI_H_
