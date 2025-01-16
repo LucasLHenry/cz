@@ -58,8 +58,6 @@ target_sources(cz PRIVATE
                 drivers/adc_input.cpp
                 drivers/gpio_irq_handler.cpp
                 drivers/encoder.cpp
-                dsp/variable_wave_oscillator.cpp
-                dsp/dds_core.cpp
                 dsp/synth.cpp
                 dsp/phase_distorter.cpp
                 dsp/phase_distortion/default.cpp
@@ -69,6 +67,7 @@ target_sources(cz PRIVATE
                 dsp/phase_distortion/reverse.cpp
                 dsp/phase_distortion/double_kink.cpp
                 dsp/phase_distortion/sync_high.cpp
+                dsp/phase_distortion/bitcrush.cpp
               )
 
 pico_set_program_name(cz "cz")
