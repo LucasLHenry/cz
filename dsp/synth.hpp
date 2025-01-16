@@ -20,12 +20,11 @@ class Synth {
         void process(AudioDAC::Frame* buf, size_t size);
 
     private:
-        PDAlgo** algos_;
         PhaseDistorter phase_distorter1_;
         PhaseDistorter phase_distorter2_;
         UI::Params* params_;
-        float lpf_coeff_, hpf_coeff_;
-        int16_t lpf_val_, hpf_val_;
+        float lpf_coeff_;
+        int16_t lpf_val_;
         float volume_;
         float phase_;
         float freq_;

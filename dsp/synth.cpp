@@ -10,33 +10,32 @@ SyncAlgo sync2;
 ReverseAlgo reverse2;
 DoubleKinkAlgo double_kink2;
 HighSyncAlgo sync_high1;
+BitcrushAlgo bitcrush1;
 
 void Synth::init(float volume, UI::Params* params) {
     volume_ = volume;
     params_ = params;
-    PDAlgo* algos1[6] = {
+    PDAlgo* algos1[3] = {
         &default1,
         &kink1,
         &double_kink1,
+    };
+    PDAlgo* algos2[4] = {
         &sync1,
         &sync_high1,
         &reverse1,
+        &bitcrush1,
     };
-    PDAlgo* algos2[2] = {
-        &kink2,
-        &double_kink2,
-    };
-    phase_distorter1_.init(algos1, 6);
-    phase_distorter2_.init(algos2, 2);
+    phase_distorter1_.init(algos1, 3);
+    phase_distorter2_.init(algos2, 4);
     lpf_coeff_ = ewma_filter_coefficient(20000);
-    hpf_coeff_ = ewma_filter_coefficient(10);
 }
 
 void Synth::process(AudioDAC::Frame* buf, size_t size) {
     // update params
     freq_ = params_->freq_hz * k_hz_phasor_f;
     phase_distorter1_.update_params(params_->warp, params_->algo);
-    phase_distorter2_.update_params(1.0 - params_->warp, params_->algo);
+    phase_distorter2_.update_params(params_->warp, params_->algo);
     float wave = params_->wave * (NUM_RESO_WAVES - 1);
     MAKE_INTEGRAL_FRACTIONAL(wave);
     
