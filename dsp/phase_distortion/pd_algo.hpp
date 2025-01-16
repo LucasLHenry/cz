@@ -9,16 +9,12 @@ class PDAlgo {
         PDAlgo() {}
         virtual ~PDAlgo();
 
-        void update_params(float warp);
+        virtual void update_params(float warp);
         virtual float process_phase(float pha);
-        float max_warp = 1.0;
     
     protected:
-        float warp_;
-        virtual void update_params_();
-    
-    private:
-        bool started_;
+        bool passthrough_;
+        float prev_warp_;
 };
 
 

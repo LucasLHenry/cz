@@ -7,11 +7,14 @@ DoubleKinkAlgo::DoubleKinkAlgo () {
     offset_2_ = 1.0 / 3.0;
 }
 
-void DoubleKinkAlgo::update_params_() {
-    interp_ = warp_;
+void DoubleKinkAlgo::update_params(float warp) {
+    interp_ = warp;
+    passthrough_ = warp == 0;
 }
 
 float DoubleKinkAlgo::process_phase(float pha) {
+    if (passthrough_) return pha;
+    
     if (pha < kink_point_1_) {
         float warped_phase = 2*pha;
         return xfade(pha, 2*pha, interp_);

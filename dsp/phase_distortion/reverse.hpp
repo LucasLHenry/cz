@@ -9,9 +9,9 @@ class ReverseAlgo : public PDAlgo {
         ~ReverseAlgo() {}
 
         virtual float process_phase(float pha);
+        virtual void update_params(float warp);
 
     private:
-        virtual void update_params_();
         float reverse_point_;
 };
 

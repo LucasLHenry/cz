@@ -9,9 +9,7 @@ class DefaultAlgo : public PDAlgo {
         ~DefaultAlgo() {}
 
         virtual float process_phase(float pha);
-
-    private:
-        virtual void update_params_();
+        virtual void update_params(float warp);
 };
 
 #endif  // PHASE_DISTORTION_KINK_H_

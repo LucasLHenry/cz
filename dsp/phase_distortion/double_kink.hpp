@@ -10,9 +10,9 @@ class DoubleKinkAlgo : public PDAlgo {
         ~DoubleKinkAlgo() {}
 
         virtual float process_phase(float pha);
-
+        virtual void update_params(float warp);
+        
     private:
-        virtual void update_params_();
         float interp_;
         float kink_point_1_, kink_point_2_;
         float offset_1_, offset_2_;

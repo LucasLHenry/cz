@@ -12,7 +12,7 @@ class BitcrushAlgo : public PDAlgo {
         virtual float process_phase(float pha);
 
     private:
-        virtual void update_params_();
+        virtual void update_params(float warp);
         float slope_, inv_slope_;
         bool passthrough_;
 };

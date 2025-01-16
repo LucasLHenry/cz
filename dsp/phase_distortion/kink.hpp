@@ -9,9 +9,9 @@ class KinkAlgo : public PDAlgo {
         ~KinkAlgo() {}
 
         virtual float process_phase(float pha);
+        virtual void update_params(float warp);
 
     private:
-        virtual void update_params_();
         float s1, s2, o2;
         float kink_point;
 };
