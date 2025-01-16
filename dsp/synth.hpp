@@ -1,9 +1,7 @@
 #ifndef DSP_SYNTH_H_
 #define DSP_SYNTH_H_
 
-#include "dds_core.hpp"
 #include "phase_distorter.hpp"
-#include "variable_wave_oscillator.hpp"
 #include "phase_distortion/pd_algo.hpp"
 #include "phase_distortion/all_algos.hpp"
 
@@ -11,6 +9,7 @@
 #include "../tables/waves.h"
 #include "../utils.h"
 #include "../ui.hpp"
+#include "../tables/waves.h"
 
 class Synth {
     public:
@@ -23,8 +22,7 @@ class Synth {
     private:
         PDAlgo** algos_;
         PhaseDistorter phase_distorter1_;
-        PhaseDistorter phase_distorter2_;   
-        VariWaveOsc osc_;
+        PhaseDistorter phase_distorter2_;
         UI::Params* params_;
         float lpf_coeff_, hpf_coeff_;
         int16_t lpf_val_, hpf_val_;
