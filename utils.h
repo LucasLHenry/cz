@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "hw_config.h"
+#include "tables/pitch_lut.h"
 
 // courtesy of Emilie Gillet
 #define ONE_POLE_LPF(out, in, coefficient) out += (in - out) * coefficient
@@ -27,6 +28,13 @@ inline float interpolate(const float* table, float index, float size) {
     float a = table[index_integral];
     float b = table[index_integral + 1];
     return a + (b - a) * index_fractional;
+}
+
+inline float pow2f(float x) {
+    MAKE_INTEGRAL_FRACTIONAL(x);
+    float lut_val = interpolate(pitch_lut, x_fractional, pitch_lut_table_len);
+    lut_val *= static_cast<float>(1 << x_integral);
+    return lut_val;
 }
 
 #endif  // UTILS_H_

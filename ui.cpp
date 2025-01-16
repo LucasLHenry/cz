@@ -36,8 +36,5 @@ float UI::get_note(int32_t enc_course, int32_t enc_fine) {
 
 float UI::get_freq(float note) {
     float octave = note * pitch_multiplier;
-    MAKE_INTEGRAL_FRACTIONAL(octave);
-    float freq_hz = interpolate(pitch_lut, octave_fractional, pitch_lut_table_len);
-    freq_hz *= static_cast<float>(1 << octave_integral);
-    return freq_hz;
+    return pow2f(octave);
 }
