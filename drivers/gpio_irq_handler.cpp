@@ -10,13 +10,14 @@ void GPIO_IRQ_Handler::init() {
 
 void GPIO_IRQ_Handler::register_interrupt(uint gpio_pin, GPIO_IRQ_Handler::IRQ_Event events, gpio_irq_callback_t callback) {
     if (gpio_pin > HIGHEST_INTERRUPT_PIN) return;
-    if (num_registered_interrupts_++ == 0) {
+    if (num_registered_interrupts_ == 0) {
         gpio_set_irq_enabled_with_callback(gpio_pin, events, true, &general_callback);
     } else {
         gpio_set_irq_enabled(gpio_pin, events, true);
     }
 
     isr_list_[get_core_num()][gpio_pin] = callback;
+    num_registered_interrupts_++;
 }
 
 void GPIO_IRQ_Handler::unregister_interrupt(uint gpio_pin) {
