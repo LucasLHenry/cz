@@ -47,7 +47,9 @@ inline float pow2f(float x) {
 }
 
 inline float soft_limit(float x) {
-  return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
+    if (x >= 3.0) return 1.0;
+    if (x <= -3.0) return -1.0;
+    return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
 }
 
 #endif  // UTILS_H_
