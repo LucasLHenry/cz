@@ -9,7 +9,7 @@
 
 #define ENC_PIO_SM 1
 
-#define CLK_FREQ_kHz 150000
+#define CLK_FREQ_kHz 200000
 #define OUTPUT_SAMPLE_RATE 48000
 #define ADC_OVERSAMPLE_AMT 32
 #define ADC_POT_LPF_AMT 0.1
