@@ -8,7 +8,7 @@ DoubleKinkAlgo::DoubleKinkAlgo () {
 }
 
 void DoubleKinkAlgo::update_params(float warp) {
-    interp_ = warp;
+    interp_ = warp * 0.9;
     passthrough_ = warp == 0;
 }
 

@@ -3,13 +3,14 @@
 void KinkAlgo::update_params(float warp) {
     passthrough_ = warp == 0;
     if (passthrough_) return;
+    warp *= 0.85;
     float sub = 1.0 - warp;
     s1 = 1.0 / sub;
     s2 = 1.0 / (1.0 + warp);
     o2 =  (1.0 - s2*sub) * 0.5;
     kink_point = sub * 0.5;
 }
-
+    
 float KinkAlgo::process_phase(float pha) {
     if (passthrough_) return pha;
     
