@@ -11,23 +11,27 @@ ReverseAlgo reverse2;
 DoubleKinkAlgo double_kink2;
 HighSyncAlgo sync_high1;
 BitcrushAlgo bitcrush1;
+BitfadeAlgo bitfade1;
 
 void Synth::init(float volume, UI::Params* params) {
     volume_ = volume;
     params_ = params;
-    PDAlgo* algos1[3] = {
-        &default1,
+    PDAlgo* algos1[7] = {
         &kink1,
         &double_kink1,
-    };
-    PDAlgo* algos2[4] = {
+        &reverse1,
         &sync1,
         &sync_high1,
-        &reverse1,
+        &bitfade1,
         &bitcrush1,
     };
-    phase_distorter1_.init(algos1, 3);
-    phase_distorter2_.init(algos2, 4);
+    PDAlgo* algos2[3] = {
+        &default1,
+        &bitfade1,
+        &bitcrush1,
+    };
+    phase_distorter1_.init(algos1, 7);
+    phase_distorter2_.init(algos2, 3);
     lpf_coeff_ = ewma_filter_coefficient(20000);
 }
 
