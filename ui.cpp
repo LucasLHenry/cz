@@ -46,11 +46,11 @@ void UI::poll() {
 }
 
 float UI::get_note(int32_t enc_course, int32_t enc_fine) {
-    float num_semitones = min_semitones + (enc_course >> 1) + 0.05 * enc_fine;
-    return CLAMP(num_semitones, min_semitones, max_semitones);
+    float num_semitones = 52.0 + (enc_course >> 1) + 0.05 * enc_fine;
+    return CLAMP(num_semitones, 52.0, 144.0);
 }
 
 float UI::get_freq(float note) {
-    float octave = note * pitch_multiplier;
+    float octave = note / 12.0;
     return pow2f(octave);
 }
