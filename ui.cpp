@@ -35,7 +35,7 @@ void UI::poll() {
     params.wave = wave_pot_.value_f;
     params.warp = warp_pot_.value_f;
     params.algo = algo_pot_.value_f;
-    params.volume = volume_pot_.value_f*1.5 + 0.4;
+    params.volume = volume_pot_.value_f*2.0 + 1.0;
     params.phase_offset = phase_pot_.value_f;
 
     if (gpio_get(ENC_BTN_PIN) == false) enc_fine_ += pitch_enc_.change;

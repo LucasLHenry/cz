@@ -52,8 +52,8 @@ void Synth::process(AudioDAC::Frame* buf, size_t size) {
         float distorted_phase = phase_distorter1_.process_phase(phase_);
         distorted_phase = phase_distorter2_.process_phase(distorted_phase);
 
-        distorted_phase += params_->phase_offset;
-        if (distorted_phase > 1.0) distorted_phase -= 1.0;
+        // distorted_phase += params_->phase_offset;
+        // if (distorted_phase > 1.0) distorted_phase -= 1.0;
         
         // waveform generation
         float val1 = interpolate(reso_waves[wave_integral], distorted_phase, k_wave_table_len);
