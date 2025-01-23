@@ -10,7 +10,6 @@
 #include "hw_config.h"
 #include "drivers/adc_input.hpp"
 #include "drivers/encoder.hpp"
-#include "tables/pitch_lut.h"
 
 class UI {
     public:
