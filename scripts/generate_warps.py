@@ -52,10 +52,8 @@ def write_table(f, table_name: str, table: list[float]):
     
 def generate_sine() -> list[float]:
     i = np.linspace(0, 1, 1024)
-    arr = -np.cos(3*np.pi*i)
+    arr = (1-np.cos(3*np.pi*i))/2
     print(len(arr))
-    # plt.plot(i, arr)
-    # plt.show()
     return arr
     
     

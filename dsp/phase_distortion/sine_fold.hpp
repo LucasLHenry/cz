@@ -7,7 +7,7 @@
 
 class SinefoldAlgo : public PDAlgo {
     public:
-        SinefoldAlgo();
+        SinefoldAlgo() {}
         ~SinefoldAlgo() {}
 
         virtual float process_phase(float pha);

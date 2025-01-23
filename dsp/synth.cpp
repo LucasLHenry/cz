@@ -12,12 +12,13 @@ DoubleKinkAlgo double_kink2;
 HighSyncAlgo sync_high1;
 BitcrushAlgo bitcrush1;
 BitfadeAlgo bitfade1;
+SinefoldAlgo sinefold1;
 
 void Synth::init(float volume, UI::Params* params) {
     volume_ = volume;
     params_ = params;
     PDAlgo* algos1[7] = {
-        &kink1,
+        &sinefold1,
         &double_kink1,
         &reverse1,
         &sync1,
@@ -39,7 +40,7 @@ void Synth::process(AudioDAC::Frame* buf, size_t size) {
     // update params
     freq_ = params_->freq_hz * k_hz_phasor_f;
     phase_distorter1_.update_params(params_->warp, params_->algo);
-    phase_distorter2_.update_params(params_->warp, params_->algo);
+    // phase_distorter2_.update_params(params_->warp, params_->algo);
     float wave = params_->wave * (NUM_RESO_WAVES - 1);
     MAKE_INTEGRAL_FRACTIONAL(wave);
     
@@ -50,7 +51,7 @@ void Synth::process(AudioDAC::Frame* buf, size_t size) {
 
         // phase distortion
         float distorted_phase = phase_distorter1_.process_phase(phase_);
-        distorted_phase = phase_distorter2_.process_phase(distorted_phase);
+        // distorted_phase = phase_distorter2_.process_phase(distorted_phase);
 
         // distorted_phase += params_->phase_offset;
         // if (distorted_phase > 1.0) distorted_phase -= 1.0;
