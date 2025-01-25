@@ -1,0 +1,2 @@
+# CZ
+This is the codebase for a synthesizer currently in development with CCTV. It is based off of the Casio CZ line of phase distortion synthesis, with heavy modifications. This code is designed to run on the RP2350, with a PCM510x DAC. It includes drivers for the DAC, as well as a generalized ADC input handler with mux controls. Enjoy!
