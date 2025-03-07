@@ -5,10 +5,11 @@ import os
 
 TABLE_NUM_BITS = 12
 TABLE_LEN = 2 ** TABLE_NUM_BITS
+DITHER_BITS = 2
 SAMPLE_FREQ = 48000
 PATH_TO_TABLES = "/tables/"
 FILE_NAME = "waves.h"
-RESO_WAVE_HARMONICS = [1, 2, 4, 8, 12, 16, 20] # [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 1]
+RESO_WAVE_HARMONICS = [1, 2, 4, 8, 12, 16, 20]
 RESO_WAVE_TYPE = "tri"
 
 
@@ -29,11 +30,13 @@ def main():
 
     downshift = 32 - TABLE_NUM_BITS
     hz_phasor = int(2**32 / SAMPLE_FREQ)
+    dither_coeff = DITHER_BITS / TABLE_LEN
     
     file_path = f"{os.getcwd()}{PATH_TO_TABLES}{FILE_NAME}"
     # output_type = OutputType.INT16
     with open(file_path, 'w') as f:
         f.write(file_header)
+        f.write(f"const float dither_coeff = {dither_coeff:E};\n")
         f.write(f"const uint32_t k_wave_table_len = {TABLE_LEN};\n")
         f.write(f"const uint32_t k_dds_downshift = {downshift};\n")
         # f.write(f"const float k_dds_inverse_remainder = {1.0 / (2**downshift - 1):E};\n")

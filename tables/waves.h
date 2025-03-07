@@ -3,6 +3,7 @@
 #include<stdint.h>
 #ifndef TABLES_WAVES_H_
 #define TABLES_WAVES_H_
+const float dither_coeff = 4.882812E-04;
 const uint32_t k_wave_table_len = 4096;
 const uint32_t k_dds_downshift = 20;
 const uint32_t k_hz_phasor = 89478;
