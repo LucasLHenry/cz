@@ -1,0 +1,3 @@
+[submodule "rplib"]
+	path = rplib
+	url = https://github.com/LucasLHenry/rplib.git

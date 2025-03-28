@@ -2,7 +2,7 @@
 #define PHASE_DISTORTION_SINE_FOLD_H_
 
 #include "pd_algo.hpp"
-#include "../../utils.h"
+#include "../../rplib/utils/utils.h"
 #include "../../tables/warps.h"
 
 class SinefoldAlgo : public PDAlgo {

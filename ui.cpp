@@ -47,7 +47,8 @@ void UI::poll() {
 
 float UI::get_note(int32_t enc_course, int32_t enc_fine) {
     float num_semitones = 52.0 + (enc_course >> 1) + 0.05 * enc_fine;
-    return CLAMP(num_semitones, 52.0, 144.0);
+    CONSTRAIN(num_semitones, 52.0, 144.0)
+    return num_semitones;
 }
 
 float UI::get_freq(float note) {

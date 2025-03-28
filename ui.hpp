@@ -6,10 +6,11 @@
 #include "hardware/adc.h"
 #include "hardware/gpio.h"
 
-#include "utils.h"
+#include "rplib/dsp/dsp.h"
+#include "rplib/utils/utils.h"
 #include "hw_config.h"
-#include "drivers/adc_input.hpp"
-#include "drivers/encoder.hpp"
+#include "rplib/drivers/adc/adc_input.hpp"
+#include "rplib/drivers/encoder/encoder.hpp"
 
 class UI {
     public:

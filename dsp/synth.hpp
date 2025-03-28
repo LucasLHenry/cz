@@ -5,9 +5,10 @@
 #include "phase_distortion/pd_algo.hpp"
 #include "phase_distortion/all_algos.hpp"
 
-#include "../drivers/audio_dac.hpp"
+#include "../rplib/drivers/i2s_dac/audio_dac.hpp"
 #include "../tables/waves.h"
-#include "../utils.h"
+#include "../rplib/utils/utils.h"
+#include "../rplib/dsp/dsp.h"
 #include "../ui.hpp"
 #include "../tables/waves.h"
 

@@ -1,7 +1,7 @@
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
  
-#include "drivers/audio_dac.hpp"
+#include "rplib/drivers/i2s_dac/audio_dac.hpp"
 #include "ui.hpp"
 #include "dsp/synth.hpp"
 #include "hw_config.h"
@@ -15,7 +15,8 @@ void buffer_fill(AudioDAC::Frame* buf, size_t size) {
 }
 
 void core1_entry_point() {
-    audio_dac.init(OUTPUT_SAMPLE_RATE, DAC_BUFFER_SIZE);
+    audio_dac.init(OUTPUT_SAMPLE_RATE, DAC_BUFFER_SIZE, DAC_PIO_SM,
+                   I2S_DATA_PIN, I2S_BASE_CLK_PIN);
     audio_dac.start(buffer_fill);
     while (true) {}
 }

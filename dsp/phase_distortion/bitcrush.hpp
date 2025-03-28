@@ -2,7 +2,7 @@
 #define PHASE_DISTORTION_BITCRUSH_H_
 
 #include "pd_algo.hpp"
-#include "../../utils.h"
+#include "../../rplib/utils/utils.h"
 
 class BitcrushAlgo : public PDAlgo {
     public:

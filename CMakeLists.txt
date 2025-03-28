@@ -53,10 +53,10 @@ add_executable(cz)
 target_sources(cz PRIVATE 
                 main.cpp 
                 ui.cpp
-                drivers/audio_dac.cpp
-                drivers/adc_input.cpp
-                drivers/gpio_irq_handler.cpp
-                drivers/encoder.cpp
+                rplib/drivers/i2s_dac/audio_dac.cpp
+                rplib/drivers/adc/adc_input.cpp
+                rplib/drivers/gpio_irq_handler/gpio_irq_handler.cpp
+                rplib/drivers/encoder/encoder.cpp
                 dsp/synth.cpp
                 dsp/phase_distorter.cpp
                 dsp/phase_distortion/default.cpp
