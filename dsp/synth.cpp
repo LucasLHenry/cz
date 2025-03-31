@@ -50,20 +50,22 @@ void Synth::process(AudioDAC::Frame* buf, size_t size) {
         if (phase_ > 1.0) phase_ -= 1.0;
 
         // phase distortion
-        float distorted_phase = phase_distorter1_.process_phase(phase_);
+        // float distorted_phase = phase_distorter1_.process_phase(phase_);
         // distorted_phase = phase_distorter2_.process_phase(distorted_phase);
 
         // distorted_phase += params_->phase_offset;
         // if (distorted_phase > 1.0) distorted_phase -= 1.0;
         
         // waveform generation
-        float val1 = interpolate(reso_waves[wave_integral], distorted_phase, k_wave_table_len);
-        float val2 = interpolate(reso_waves[wave_integral+1], distorted_phase, k_wave_table_len);
-        float val = val1 + (val2 - val1)*wave_fractional;
+        // float val1 = interpolate(reso_waves[wave_integral], distorted_phase, k_wave_table_len);
+        // float val2 = interpolate(reso_waves[wave_integral+1], distorted_phase, k_wave_table_len);
+        // float val = val1 + (val2 - val1)*wave_fractional;
 
         // post-processing and output
-        ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
-        int16_t out_val = soft_limit(lpf_val_ * params_->volume)*0.4 * INT16_MAX;
+        // ONE_POLE_LPF(lpf_val_, val, lpf_coeff_);
+        // int16_t out_val = soft_limit(lpf_val_ * params_->volume)*0.4 * INT16_MAX;
+        float val = cos2pif(phase_);
+        int16_t out_val = val * 0.2f * INT16_MAX;
         buf[i].l = out_val;
         buf[i].r = out_val;
     }

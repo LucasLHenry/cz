@@ -1,7 +1,7 @@
 #include "pico/stdlib.h"
 #include "pico/multicore.h"
  
-#include "rplib/drivers/i2s_dac/audio_dac.hpp"
+#include "rplib/drivers/audio_dac.hpp"
 #include "ui.hpp"
 #include "dsp/synth.hpp"
 #include "hw_config.h"
